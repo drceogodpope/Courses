@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:animateLayoutChanges="true"
+    android:gravity="center">
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:id="@+id/floatingActionButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="A D D   C O U R S E" />
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/addCourseRelativeLayout"
+        android:focusable="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:focusableInTouchMode="true"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:layout_below="@+id/my_toolbar">
+
+        <LinearLayout
+            android:id="@+id/layoutEnterCourseName"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Enter Course Name"
+                android:textAlignment="center"
+                android:textSize="@dimen/large_label_size"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+            <EditText
+                android:id="@+id/editTextCourseTitle"
+                android:layout_width="match_parent"
+                android:inputType="textCapWords"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:hint="course name"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutEnterCourseCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/large_label_size"
+                android:text="Enter Course code"
+                android:layout_marginBottom="20dp"
+                android:textAlignment="center"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+            <EditText
+                android:id="@+id/editTextCourseCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:inputType="textCapCharacters"
+                android:hint="course code"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutEnterCourseStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/large_label_size"
+                android:layout_marginBottom="20dp"
+                android:text="Enter Start Date"
+                android:textAlignment="center"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+            <DatePicker
+                android:id="@+id/datePickerStartDate"
+                android:layout_width="wrap_content"
+                android:elevation="5dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGreen"
+                android:spinnersShown="true"
+                android:layout_gravity="center"
+                android:calendarViewShown="false"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layoutEnterCourseEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textSize="@dimen/large_label_size"
+                android:text="Enter End Date"
+                android:textAlignment="center"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+            <DatePicker
+                android:id="@+id/datePickerEndDate"
+                android:layout_width="wrap_content"
+                android:elevation="5dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorRed"
+                android:spinnersShown="true"
+                android:layout_gravity="center"
+                android:calendarViewShown="false"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topLayout"
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            android:id="@+id/scrollView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:id="@+id/finalLinearLayout"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/layoutEnterCourseTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/scrollView">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter Time"
+                android:layout_marginBottom="20dp"
+                android:textSize="@dimen/large_label_size"
+                android:textAlignment="center"
+                style="@style/Base.TextAppearance.AppCompat.Large"/>
+
+            <TimePicker
+                android:id="@+id/timePickercourseTime"
+                android:layout_width="wrap_content"
+                android:elevation="5dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
