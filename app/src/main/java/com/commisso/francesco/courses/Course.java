@@ -24,15 +24,8 @@ public class Course implements Serializable{
     private String textbook;
 
 
-    public Course(String teacher, String title, String courseCode,DateTime startDate, DateTime endDate,LocalTime time){
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.time = time;
-        this.teacher = teacher;
-        this.title = title;
-        this.courseCode = courseCode;
-    }
-
+    //FIRST CONSTRUCTOR
+    //COURSE OBJECT GETS CREATED AND THEN ID GETS SET WHEN ADDED TO DB
     public Course(String title, String courseCode, DateTime startDate, DateTime endDate, LocalTime time){
         this.title = title;
         this.courseCode = courseCode;
@@ -41,6 +34,7 @@ public class Course implements Serializable{
         this.time = time;
     }
 
+    //USED TO RECREATE COURSES FROM DB
     public Course(String title, String courseCode, DateTime startDate, DateTime endDate, LocalTime time,long id){
         this.title = title;
         this.courseCode = courseCode;
@@ -50,7 +44,19 @@ public class Course implements Serializable{
         this.id = id;
     }
 
+    //
+    public Course(String teacher, String title, String courseCode,DateTime startDate, DateTime endDate,LocalTime time){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.time = time;
+        this.teacher = teacher;
+        this.title = title;
+        this.courseCode = courseCode;
+    }
 
+
+
+    //GETTERS
     public long getId(){return this.id;}
     public String getTeacher(){
         return teacher;

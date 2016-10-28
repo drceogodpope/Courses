@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
-
 import java.util.ArrayList;
+import java.util.Calendar;
+
 
 public class AddCourseActivity extends AppCompatActivity {
 
@@ -79,6 +82,7 @@ public class AddCourseActivity extends AppCompatActivity {
         enterEndDate = (DatePicker) findViewById(R.id.datePickerEndDate);
         enterTime = (TimePicker) findViewById(R.id.timePickercourseTime);
 
+        enterEndDate.setMinDate(Calendar.getInstance().getTimeInMillis());
 
         for(int i = 1;i<layouts.size();i++){
             layouts.get(i).setVisibility(View.GONE);
@@ -98,13 +102,15 @@ public class AddCourseActivity extends AppCompatActivity {
                         dbHelper.insertCourse(c);
                         Intent intent = new Intent(AddCourseActivity.this,MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
                     }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Check Fields!",Toast.LENGTH_SHORT).show();}
                 }
             }
 
         });
     }
-
 
 
     public void showNextLayout(){
@@ -115,10 +121,7 @@ public class AddCourseActivity extends AppCompatActivity {
             } else {
                 showAllLayouts();
             }
-
     }
-
-
 
 
     public void showAllLayouts(){
@@ -130,10 +133,12 @@ public class AddCourseActivity extends AppCompatActivity {
             scrollView.setVisibility(View.VISIBLE);
 
             for(LinearLayout l : layouts){
-                View view;
-                view = l.getChildAt(1);
+              View view = l.getChildAt(1);
                 l.removeView(view);
                 finalLinearLayout.addView(view);
+                TextView tv = new TextView(getApplicationContext());
+                tv.setVisibility(View.INVISIBLE);
+                finalLinearLayout.addView(tv);
             }
 
             currentLayout = -1;
@@ -182,9 +187,12 @@ public class AddCourseActivity extends AppCompatActivity {
                 layouts.get(currentLayout).setVisibility(View.VISIBLE);
             }
         }
-        if(currentLayout==0){
+        else{
             super.onBackPressed();
+            overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+
         }
+
     }
 
 

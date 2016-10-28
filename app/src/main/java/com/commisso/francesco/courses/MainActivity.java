@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.View;
 
@@ -26,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -47,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AddCourseActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AddCourseActivity.class);
                 startActivity(intent);
-//                overridePendingTransition(android.R.anim.,android.R.anim.slide_out_right);    !ADD TRANSITIONS
+                overridePendingTransition(R.anim.pull_in_left,R.anim.push_out_right);
+
+
             }
         });
         fab.setOnLongClickListener(new View.OnLongClickListener(){
@@ -59,12 +62,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,MainActivity.class);
                 startActivity(intent);
                 return false;
+
             }
         });
 
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

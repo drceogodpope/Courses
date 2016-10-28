@@ -1,5 +1,6 @@
 package com.commisso.francesco.courses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -11,10 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-/**
- * Created by Francesco on 2016-10-14.
- */
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCardViewHolder> {
 
@@ -45,6 +42,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
                     Intent intent = new Intent(context,CourseActivity.class);
                     intent.putExtra("position",getAdapterPosition());
                     context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                 }
             });
             v.setBackgroundColor(ContextCompat.getColor(v.getContext(),R.color.white));
@@ -75,5 +73,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
     public ArrayList<Course> getCourses(){
         return courses;
     }
+
 
 }

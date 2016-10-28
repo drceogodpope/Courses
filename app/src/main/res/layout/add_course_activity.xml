@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:animateLayoutChanges="true"
@@ -26,15 +27,11 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:layout_gravity="center"
-            android:gravity="center"
+           style="@style/TitleToolBar"
             android:text="A D D   C O U R S E" />
     </android.support.v7.widget.Toolbar>
 
@@ -48,81 +45,113 @@
         android:layout_marginRight="15dp"
         android:focusableInTouchMode="true"
         android:animateLayoutChanges="true"
-        android:gravity="center"
-        android:layout_below="@+id/my_toolbar">
+        android:layout_below="@id/my_toolbar"
+        android:gravity="top"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
-        <LinearLayout
-            android:id="@+id/layoutEnterCourseName"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+            <LinearLayout
+                android:id="@+id/layoutEnterCourseName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Enter Course Name"
-                android:textAlignment="center"
-                android:textSize="@dimen/large_label_size"
-                style="@style/Base.TextAppearance.AppCompat.Large"/>
-            <EditText
-                android:id="@+id/editTextCourseTitle"
-                android:layout_width="match_parent"
-                android:inputType="textCapWords"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:hint="course name"
-                style="@style/Base.TextAppearance.AppCompat.Large"/>
-        </LinearLayout>
+                android:layout_margin="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="top">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:text="Enter Course Title"
+                    android:textColor="@color/colorGrey"
+                    android:textAlignment="center"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
+                    android:id="@+id/textView7" />
 
-        <LinearLayout
-            android:id="@+id/layoutEnterCourseCode"
+                <EditText
+                    android:id="@+id/editTextCourseTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColorHint="@color/colorLightGrey"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@android:color/transparent"
+                    android:inputType="textCapWords"
+                    android:hint="course title"
+                    style="@style/Base.TextAppearance.AppCompat.Large"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
 
-            android:orientation="vertical">
-            <TextView
+            <LinearLayout
+                android:id="@+id/layoutEnterCourseCode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/large_label_size"
-                android:text="Enter Course code"
-                android:layout_marginBottom="20dp"
-                android:textAlignment="center"
-                style="@style/Base.TextAppearance.AppCompat.Large"/>
-            <EditText
-                android:id="@+id/editTextCourseCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:inputType="textCapCharacters"
-                android:hint="course code"
-                style="@style/Base.TextAppearance.AppCompat.Large"/>
-        </LinearLayout>
+                android:layout_margin="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="top">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorGrey"
+                    android:text="Enter Course code"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center"
+                    style="@style/Base.TextAppearance.AppCompat.Large"/>
+                <EditText
+                    android:id="@+id/editTextCourseCode"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColorHint="@color/colorLightGrey"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:background="@android:color/transparent"
+                    android:inputType="textCapCharacters"
+                    android:hint="course code"
+                    style="@style/Base.TextAppearance.AppCompat.Large"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
 
         <LinearLayout
             android:id="@+id/layoutEnterCourseStartDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:gravity="top"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/large_label_size"
-                android:layout_marginBottom="20dp"
                 android:text="Enter Start Date"
+                android:layout_marginBottom="20dp"
                 android:textAlignment="center"
+                android:textColor="@color/colorGrey"
                 style="@style/Base.TextAppearance.AppCompat.Large"/>
+
             <DatePicker
                 android:id="@+id/datePickerStartDate"
                 android:layout_width="wrap_content"
                 android:elevation="5dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorGreen"
                 android:spinnersShown="true"
+                android:calendarTextColor="@color/white"
                 android:layout_gravity="center"
                 android:calendarViewShown="false"/>
         </LinearLayout>
@@ -132,7 +161,8 @@
             android:id="@+id/layoutEnterCourseEndDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:gravity="top"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -140,15 +170,17 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="@dimen/large_label_size"
                 android:text="Enter End Date"
+                android:textColor="@color/colorGrey"
                 android:textAlignment="center"
                 style="@style/Base.TextAppearance.AppCompat.Large"/>
+
             <DatePicker
                 android:id="@+id/datePickerEndDate"
                 android:layout_width="wrap_content"
                 android:elevation="5dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorRed"
                 android:spinnersShown="true"
+                android:calendarTextColor="@color/white"
                 android:layout_gravity="center"
                 android:calendarViewShown="false"/>
 
@@ -157,6 +189,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_below="@+id/topLayout"
             android:animateLayoutChanges="true"
             android:visibility="gone"
@@ -175,7 +208,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:gravity="top"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/scrollView">
             <TextView
@@ -183,6 +217,7 @@
                 android:layout_height="wrap_content"
                 android:text="Enter Time"
                 android:layout_marginBottom="20dp"
+                android:textColor="@color/colorGrey"
                 android:textSize="@dimen/large_label_size"
                 android:textAlignment="center"
                 style="@style/Base.TextAppearance.AppCompat.Large"/>
