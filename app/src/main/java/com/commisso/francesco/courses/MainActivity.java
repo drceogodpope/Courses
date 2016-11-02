@@ -11,6 +11,10 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 
@@ -20,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView coursesRecyclerView;
     LinearLayoutManager mLayoutManager;
     DBHelper dbHelper;
-    public static ArrayList<Course> COURSES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +36,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         dbHelper = DBHelper.getInstance(getApplicationContext());
-        COURSES = new ArrayList<>();
-        if(dbHelper.getCourses(dbHelper.getReadableDatabase(),COURSES)!= null){
-            COURSES = dbHelper.getCourses(dbHelper.getReadableDatabase(),COURSES);
-        }
 
         coursesRecyclerView = (RecyclerView) findViewById(R.id.coursesRecyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         coursesRecyclerView.setLayoutManager(mLayoutManager);
-        coursesRecyclerView.setAdapter(new CourseAdapter(COURSES));
+        coursesRecyclerView.setAdapter(new CourseAdapter(dbHelper.getCourses(dbHelper.getReadableDatabase())));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -71,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        System.out.println(dbHelper.getTableAsString(dbHelper.getReadableDatabase(),dbHelper.PROJECT_TABLE_NAME));
+
     }
 
     @Override
