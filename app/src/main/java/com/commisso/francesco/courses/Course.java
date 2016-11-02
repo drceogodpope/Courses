@@ -7,22 +7,21 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 // A CLASS TO HOLD TO HOLD COURSE INFORMATION
 
-public class Course implements Serializable{
+public class Course{
 
     private long id;
-
     private String title;
     private String courseCode;
     private DateTime startDate;
     private DateTime endDate;
     private LocalTime time;
-
     private String teacher;
     private String textbook;
-
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     //FIRST CONSTRUCTOR
     //COURSE OBJECT GETS CREATED AND THEN ID GETS SET WHEN ADDED TO DB
@@ -82,17 +81,12 @@ public class Course implements Serializable{
         DateTimeFormatter fmt = DateTimeFormat.forPattern("h:mm");
         return time.toString(fmt);
     }
-
-
     public long getEndDateMillis() {
         return endDate.getMillis();
     }
     public long getStartDateMillis() {
         return startDate.getMillis();
     }
-
-
-
     public int getNumberOfDays(){
         return Days.daysBetween(new DateTime().toLocalDate(),endDate.toLocalDate()).getDays();
     }
@@ -102,27 +96,29 @@ public class Course implements Serializable{
         return fmt.parseLocalTime(time);
     }
 
+    public Task getTask(int position){
+        return tasks.get(position);
+    }
 
-
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
 
     public static int parseDays(Days days) {
         //RETURNS NUMBER OF DAYS AS INTEGER
         return Integer.parseInt(days.toString().substring(1, days.toString().length() - 1));
     }
 
+
+    //SETTERS
     public void setTextbook(String textbook){this.textbook = textbook;}
-
-
     public void setTeacher(String teacher){
             this.teacher  = teacher;
-
     }
-
     public void setId(long id){
         this.id = id;
     }
-
-
+    public void setTasks(ArrayList<Task> tasks){this.tasks = tasks;}
 
     @Override
     public String toString() {

@@ -33,9 +33,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHo
         return new TaskCardViewHolder(itemView);    }
 
     @Override
-    public int getItemCount() {
-        return tasks.size();
-    }
+    public int getItemCount() {return tasks.size();}
 
     public static class TaskCardViewHolder extends RecyclerView.ViewHolder{
 

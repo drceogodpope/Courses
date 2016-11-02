@@ -24,15 +24,22 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COURSES_COLUMN_END_DATE = "endDate";
     public static final String COURSES_COLUMN_TIME = "time";
 
-    public static final String RESOURCES_TABLE_NAME = "resources";
-    public static final String RESOURCES_COLUMN_ID = "_id";
-    public static final String RESOURCES_COLUMN_TITLE = "title";
-
-    public static final String TESTS_TABLE_NAME = "tests";
-    public static final String TESTS_COLUMN_ID = "id";
+    public static final String TESTS_TABLE_NAME = "test";
+    public static final String TESTS_COLUMN_ID = "_id";
     public static final String TESTS_COLUMN_PERCENTAGE = "percentage";
     public static final String TESTS_COLUMN_DATE = "date";
     public static final String TESTS_COLUMN_TITLE = "title";
+    public static final String TESTS_COLUMN_LENGTH = "length";
+    public static final String TESTS_COLUMN_TOPIC = "topic";
+    public static final String TESTS_COLUMN_TESTTYPE= "testType";
+
+    public static final String PROJECT_TABLE_NAME = "project";
+    public static final String PROJECT_COLUMN_ID = "_id";
+    public static final String PROJECT_COLUMN_PERCENTAGE = "percentage";
+    public static final String PROJECT_COLUMN_DATE = "date";
+    public static final String PROJECT_COLUMN_TITLE = "title";
+    public static final String PROJECT_COLUMN_LENGTH = "length";
+    public static final String PROJECT_COLUMN_GROUPMEMBERS = "groupMembers";
 
     private static DBHelper sInstance;
 
@@ -55,28 +62,24 @@ public class DBHelper extends SQLiteOpenHelper {
         );
 
         db.execSQL(
-                "create table " + RESOURCES_TABLE_NAME + "(" + RESOURCES_COLUMN_ID +" INTEGER, " + RESOURCES_COLUMN_TITLE + " TEXT)"
+                "create table " + TESTS_TABLE_NAME + "(" + TESTS_COLUMN_ID +" INTEGER, " + TESTS_COLUMN_PERCENTAGE + " INTEGER, " + TESTS_COLUMN_DATE +" INTEGER, " + TESTS_COLUMN_TITLE + " INTEGER, " + TESTS_COLUMN_LENGTH + " INTEGER, " + TESTS_COLUMN_TOPIC + " TEXT, " + TESTS_COLUMN_TESTTYPE + " INT)"
         );
 
+        db.execSQL(
+                "create table " + PROJECT_TABLE_NAME + "(" + PROJECT_COLUMN_ID +" INTEGER, " + PROJECT_COLUMN_PERCENTAGE + " INTEGER, " + PROJECT_COLUMN_DATE +" INTEGER, " + PROJECT_COLUMN_TITLE + " INTEGER, " + PROJECT_COLUMN_LENGTH + " INTEGER, " + PROJECT_COLUMN_GROUPMEMBERS + " TEXT)"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + COURSES_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+ RESOURCES_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ TESTS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+ PROJECT_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertTextbook(Course course){
-        SQLiteDatabase db = this.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(RESOURCES_COLUMN_ID,course.getId());
-        contentValues.put(RESOURCES_COLUMN_TITLE,course.getTextbook());
-        db.insert(RESOURCES_TABLE_NAME,null,contentValues);
-        return true;
-    }
 
+    //INSERTS
     public boolean insertCourse  (Course course){
         // inserts course object into Courses table and sets course id
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,6 +92,105 @@ public class DBHelper extends SQLiteOpenHelper {
         //sets course id
         course.setId(db.insert(COURSES_TABLE_NAME, null, contentValues));
         return true;
+    }
+
+    public boolean insertTests(Course course){
+        for(int i = 0;i<course.getTasks().size();i++) {
+            Task task = course.getTask(i);
+            if(task instanceof Test){
+                SQLiteDatabase db = this.getReadableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(TESTS_COLUMN_ID, course.getId());
+                contentValues.put(TESTS_COLUMN_PERCENTAGE, task.getPercentage());
+                contentValues.put(TESTS_COLUMN_DATE, task.getDate().getMillis());
+                contentValues.put(TESTS_COLUMN_TITLE, task.getTitle());
+                contentValues.put(TESTS_COLUMN_TOPIC, ((Test) task).getTopic());
+                contentValues.put(TESTS_COLUMN_TESTTYPE, ((Test) task).getTestType());
+                db.insert(TESTS_TABLE_NAME, null, contentValues);
+            }
+        }
+        return true;
+    }
+
+    public boolean insertProjects(Course course){
+        for(int i = 0;i<course.getTasks().size();i++) {
+            Task task = course.getTask(i);
+            if(task instanceof Project){
+                SQLiteDatabase db = this.getReadableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(PROJECT_COLUMN_ID, course.getId());
+                contentValues.put(PROJECT_COLUMN_PERCENTAGE, task.getPercentage());
+                contentValues.put(PROJECT_COLUMN_DATE, task.getDate().getMillis());
+                contentValues.put(PROJECT_COLUMN_TITLE, task.getTitle());
+                contentValues.put(PROJECT_COLUMN_GROUPMEMBERS, ((Project) task).getGroupMembers());
+                db.insert(PROJECT_TABLE_NAME, null, contentValues);
+            }
+        }
+        return true;
+    }
+
+    public boolean insertTasks(Course course){
+        insertTests(course);
+        insertProjects(course);
+        return true;
+    }
+
+
+    //GETS
+
+    public ArrayList<Task> getTasks(SQLiteDatabase db,Course course){
+        ArrayList<Task> tasks = new ArrayList<>();
+
+        tasks.addAll(getTests(db,course));
+        tasks.addAll(getProjects(db,course));
+
+        return tasks;
+    }
+
+    public ArrayList<Task> getTests(SQLiteDatabase db,Course course){
+
+        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME + " WHERE " + TESTS_COLUMN_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        // WHERE 1"
+
+        ArrayList<Task> tests = new ArrayList<>();
+
+        if (c.moveToFirst()) {
+            do {
+                DateTime date = new DateTime(c.getLong(c.getColumnIndex(TESTS_COLUMN_DATE)));
+                double percentage = c.getDouble(c.getColumnIndex(TESTS_COLUMN_PERCENTAGE));
+                String topic  = c.getString(c.getColumnIndex(TESTS_COLUMN_TOPIC));
+                int length = c.getInt(c.getColumnIndex(TESTS_COLUMN_LENGTH));
+                int testType = c.getInt(c.getColumnIndex(TESTS_COLUMN_TESTTYPE));
+                tests.add(new Test(percentage,date,testType,length,topic));
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return  tests;
+    }
+
+    public ArrayList<Task> getProjects(SQLiteDatabase db,Course course){
+
+
+        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE " + PROJECT_COLUMN_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        // WHERE 1"
+
+        ArrayList<Task> tests = new ArrayList<>();
+
+        if (c.moveToFirst()) {
+            do {
+                DateTime date = new DateTime(c.getLong(c.getColumnIndex(PROJECT_COLUMN_DATE)));
+                double percentage = c.getDouble(c.getColumnIndex(PROJECT_COLUMN_PERCENTAGE));
+                String title  = c.getString(c.getColumnIndex(PROJECT_COLUMN_TITLE));
+                int length = c.getInt(c.getColumnIndex(PROJECT_COLUMN_LENGTH));
+                String groupMembers = c.getString(c.getColumnIndex(PROJECT_COLUMN_GROUPMEMBERS));
+                tests.add(new Project(percentage,date,title,groupMembers));
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return  tests;
+
     }
 
 
@@ -115,8 +217,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Course> getCourses(SQLiteDatabase db,ArrayList<Course> courses){
+    public ArrayList<Course> getCourses(SQLiteDatabase db){
 
+        ArrayList<Course> courses = new ArrayList<>();
         Cursor c = db.query(COURSES_TABLE_NAME,null," 1",null,null,null,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
                                                                                 // WHERE 1"
         courses.clear();
@@ -135,6 +238,9 @@ public class DBHelper extends SQLiteOpenHelper {
         c.close();
         return  courses;
     }
+
+
+
 
     public String getTableAsString(SQLiteDatabase db, String tableName) {
         String tableString = String.format("Table %s:\n", tableName);

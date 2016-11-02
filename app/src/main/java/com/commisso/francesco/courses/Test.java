@@ -12,16 +12,9 @@ public class Test extends Task{
     private static String MIDTERM_TITLE= "Midterm";
     private static String FINAL_TITLE= "Final";
 
-
     private double length;
-    private String topic;
+    private String topic = "";
     private int testType;
-
-    public Test(double percentage, DateTime date,int testType) {
-        super(percentage, date);
-        this.testType = testType;
-        setTestTitle(testType);
-    }
 
     public Test(double percentage, DateTime date,int testType,double length, String topic) {
         super(percentage, date);

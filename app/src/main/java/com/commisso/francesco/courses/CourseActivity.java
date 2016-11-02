@@ -2,11 +2,13 @@ package com.commisso.francesco.courses;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
@@ -30,9 +32,10 @@ public class CourseActivity extends AppCompatActivity {
     TextView time;
     TextView remainingDays;
     TextView teacher;
-
+    FloatingActionButton fab;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    DBHelper dbHelper;
 
 
     @Override
@@ -42,27 +45,32 @@ public class CourseActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         Intent i = getIntent();
-        course = MainActivity.COURSES.get(i.getIntExtra("position",0));
+        dbHelper = DBHelper.getInstance(getApplicationContext());
+
+        course = dbHelper.getCourses(dbHelper.getReadableDatabase()).get(i.getIntExtra("position",0));
 
         title = (TextView) findViewById(R.id.textViewCourseTitle);
         courseCode = (TextView) findViewById(R.id.textViewCourseCode);
         time = (TextView) findViewById(R.id.textViewTime);
         remainingDays = (TextView) findViewById(R.id.textViewNumberOfDays);
         teacher = (TextView) findViewById(R.id.textViewTeacher);
+        fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonCourseActivity);
+
+        ArrayList<Task> testTasks = new ArrayList<>();
+
+//        for(int j=0;j<1000;j++){
+//            testTasks.add(new Project(22,new DateTime(),"fuckdick","shitdick"));
+//            testTasks.add(new Test(33,new DateTime(),0,33,"ff"));
+//        }
 
 
-        ArrayList<Task> sampleTasks = new ArrayList<>();
-
-        for(int j = 0; j<20;j++){
-            Test t = new Test(33,new DateTime().plusDays(20),Test.TEST);
-            sampleTasks.add(t);
-            System.out.print(t.getTitle());
-        }
+//        course.setTasks(testTasks);
+//        dbHelper.insertTasks(course);
 
         recyclerView = (RecyclerView) findViewById(R.id.tasksRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TaskAdapter(sampleTasks));
+        recyclerView.setAdapter(new TaskAdapter(dbHelper.getTasks(dbHelper.getReadableDatabase(),course)));
 
 
         title.setText(addSpaces(course.getTitle()));
@@ -78,6 +86,15 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 return false;
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),AddTaskActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
             }
         });
 
@@ -99,5 +116,6 @@ public class CourseActivity extends AppCompatActivity {
         return result;
 
     }
+
 
 }

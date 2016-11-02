@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -97,24 +98,21 @@ public class AddCourseActivity extends AppCompatActivity {
                 }
                 else{
                     if(checkArguments()){
-                        Course c = createCourse();
-                        System.out.println(c.toString());
-                        dbHelper.insertCourse(c);
+                        createCourse();
                         Intent intent = new Intent(AddCourseActivity.this,MainActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+                        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"Check Fields!",Toast.LENGTH_SHORT).show();}
                 }
             }
-
         });
     }
 
 
     public void showNextLayout(){
-            layouts.get(currentLayout).setVisibility(View.GONE);
+        layouts.get(currentLayout).setVisibility(View.GONE);
             if (currentLayout < layouts.size() - 1) {
                 currentLayout++;
                 layouts.get(currentLayout).setVisibility(View.VISIBLE);
@@ -153,14 +151,14 @@ public class AddCourseActivity extends AppCompatActivity {
     }
 
 
-    public Course createCourse(){
+    public void createCourse(){
         String courseTitle = enterCourseTitle.getText().toString();
         String courseCode = enterCourseCode.getText().toString();
         DateTime startDate = getDateTimeFromInputs(enterStartDate,enterTime);
         DateTime endDate = getDateTimeFromInputs(enterEndDate,enterTime);
         LocalTime localTime = getTimeFromInputs(enterTime);
-
-        return new Course(courseTitle,courseCode,startDate,endDate,localTime);
+        DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
+        dbHelper.insertCourse(new Course(courseTitle,courseCode,startDate,endDate,localTime));
     }
 
     public DateTime getDateTimeFromInputs(DatePicker datePicker,TimePicker timePicker){
