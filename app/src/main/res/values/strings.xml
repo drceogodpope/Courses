@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Courses</string>
+
+    <!--TITLES-->
+    <string name="title_main_activity">"C o u r s e s"</string>
+    <string name="title_add_course_activity">"A d d   C o u r s e"</string>
+    <string name="title_add_task_activity">"A d d   T a s k"</string>
+
+
+    <!--LABELS-->
+
+
+
+    <!--TOASTS-->
+
+
+
+
+
+
 </resources>

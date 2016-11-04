@@ -138,6 +138,30 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //GETS
 
+    public Course getCourse(SQLiteDatabase db,int key){
+
+        Cursor c = db.rawQuery("SELECT * FROM " + COURSES_TABLE_NAME + " WHERE " + COURSES_COLUMN_ID + " = " + key,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        // WHERE 1"
+
+        c.moveToFirst();
+
+            String title = c.getString(c.getColumnIndex(COURSES_COLUMN_NAME));
+            String courseCode = c.getString(c.getColumnIndex(COURSES_COLUMN_COURSE_CODE));
+            DateTime startDate = new DateTime(c.getLong(c.getColumnIndex(COURSES_COLUMN_START_DATE)));
+            DateTime endDate = new DateTime(c.getLong(c.getColumnIndex(COURSES_COLUMN_END_DATE)));
+            LocalTime time = new LocalTime(c.getString(c.getColumnIndex(COURSES_COLUMN_TIME)));
+            long id = c.getLong(c.getColumnIndex(COURSES_COLUMN_ID));
+            return new Course(title, courseCode, startDate, endDate, time, id);
+
+    }
+
+
+
+
+
+
+
+
     public ArrayList<Task> getTasks(SQLiteDatabase db,Course course){
         ArrayList<Task> tasks = new ArrayList<>();
 

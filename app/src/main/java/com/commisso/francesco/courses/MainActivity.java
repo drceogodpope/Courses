@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),AddCourseActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_in_left,R.anim.push_out_right);
-
-
             }
         });
         fab.setOnLongClickListener(new View.OnLongClickListener(){
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,MainActivity.class);
                 startActivity(intent);
                 return false;
-
             }
         });
 
@@ -70,13 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        System.out.println(dbHelper.getTableAsString(dbHelper.getReadableDatabase(),dbHelper.PROJECT_TABLE_NAME));
-
+        System.out.println(dbHelper.getTableAsString(dbHelper.getReadableDatabase(),DBHelper.PROJECT_TABLE_NAME));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;    }
+        return true;
+    }
 }

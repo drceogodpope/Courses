@@ -47,7 +47,7 @@ public class CourseActivity extends AppCompatActivity {
         Intent i = getIntent();
         dbHelper = DBHelper.getInstance(getApplicationContext());
 
-        course = dbHelper.getCourses(dbHelper.getReadableDatabase()).get(i.getIntExtra("position",0));
+        course = dbHelper.getCourse(dbHelper.getReadableDatabase(),i.getIntExtra("position",0));
 
         title = (TextView) findViewById(R.id.textViewCourseTitle);
         courseCode = (TextView) findViewById(R.id.textViewCourseCode);
@@ -56,7 +56,7 @@ public class CourseActivity extends AppCompatActivity {
         teacher = (TextView) findViewById(R.id.textViewTeacher);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonCourseActivity);
 
-        ArrayList<Task> testTasks = new ArrayList<>();
+//        ArrayList<Task> testTasks = new ArrayList<>();
 
 //        for(int j=0;j<1000;j++){
 //            testTasks.add(new Project(22,new DateTime(),"fuckdick","shitdick"));
@@ -93,6 +93,10 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),AddTaskActivity.class);
+
+                Toast.makeText(getApplicationContext(),"Course id: " + String.valueOf(course.getId()),Toast.LENGTH_SHORT).show();
+
+                intent.putExtra("id",course.getId());
                 startActivity(intent);
                 overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
             }
@@ -103,9 +107,10 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
-
 
     public String addSpaces(String word){
         String result = "";

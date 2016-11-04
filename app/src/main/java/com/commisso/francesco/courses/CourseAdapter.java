@@ -40,7 +40,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent intent = new Intent(context,CourseActivity.class);
-                    intent.putExtra("position",getAdapterPosition());
+                    intent.putExtra("position",getAdapterPosition()+1);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                 }

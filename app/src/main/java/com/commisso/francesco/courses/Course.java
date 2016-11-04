@@ -120,6 +120,11 @@ public class Course{
     }
     public void setTasks(ArrayList<Task> tasks){this.tasks = tasks;}
 
+
+    public void addTask(Task t){
+        this.tasks.add(t);
+    }
+
     @Override
     public String toString() {
         return (
