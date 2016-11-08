@@ -14,7 +14,7 @@ public class DateTimeUtils {
 
     public DateTimeUtils(){}
 
-    public DateTime dateTimeFromPickers(DatePicker datePicker, TimePicker timePicker){
+    public static DateTime dateTimeFromPickers(DatePicker datePicker, TimePicker timePicker){
         int year = datePicker.getYear();
         int month = datePicker.getMonth() + 1;
         int dayOfMonth = datePicker.getDayOfMonth();

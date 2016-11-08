@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,17 +38,19 @@ public class CourseActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     DBHelper dbHelper;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_activity);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        Intent i = getIntent();
-        dbHelper = DBHelper.getInstance(getApplicationContext());
+        Intent intent = getIntent();
 
-        course = dbHelper.getCourse(dbHelper.getReadableDatabase(),i.getIntExtra("position",0));
+        dbHelper = DBHelper.getInstance(getApplicationContext());
+        if( dbHelper.getCourse(dbHelper.getReadableDatabase(),intent.getLongExtra("id",1)) != null){
+            course = dbHelper.getCourse(dbHelper.getReadableDatabase(),intent.getLongExtra("id",1));
+        }
+
 
         title = (TextView) findViewById(R.id.textViewCourseTitle);
         courseCode = (TextView) findViewById(R.id.textViewCourseCode);
@@ -55,17 +58,6 @@ public class CourseActivity extends AppCompatActivity {
         remainingDays = (TextView) findViewById(R.id.textViewNumberOfDays);
         teacher = (TextView) findViewById(R.id.textViewTeacher);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonCourseActivity);
-
-//        ArrayList<Task> testTasks = new ArrayList<>();
-
-//        for(int j=0;j<1000;j++){
-//            testTasks.add(new Project(22,new DateTime(),"fuckdick","shitdick"));
-//            testTasks.add(new Test(33,new DateTime(),0,33,"ff"));
-//        }
-
-
-//        course.setTasks(testTasks);
-//        dbHelper.insertTasks(course);
 
         recyclerView = (RecyclerView) findViewById(R.id.tasksRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -92,12 +84,11 @@ public class CourseActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(),String.valueOf(course.getId()),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),AddTaskActivity.class);
-
-                Toast.makeText(getApplicationContext(),"Course id: " + String.valueOf(course.getId()),Toast.LENGTH_SHORT).show();
-
                 intent.putExtra("id",course.getId());
                 startActivity(intent);
+
                 overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
             }
         });

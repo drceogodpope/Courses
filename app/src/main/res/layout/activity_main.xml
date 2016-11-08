@@ -33,7 +33,7 @@
             style="@style/AppTheme">
             <TextView
                 style="@style/TitleToolBar"
-                android:text="C O U R S E S"/>
+                android:text="@string/title_main_activity"/>
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView

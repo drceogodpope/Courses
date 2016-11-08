@@ -33,107 +33,69 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:gravity="center"
-            android:id="@+id/addTaskLinearLayout"
+            android:id="@+id/addTaskTopLayout"
             android:layout_below="@id/toolbar"
             android:layout_alignParentStart="true">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:id="@+id/addTaskTestButton"
-                android:layout_margin="5dp"
-                android:elevation="0dp"
-                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
+                    android:id="@+id/addTaskTestButton"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Test"/>
-            </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:layout_margin="5dp"
-                android:id="@+id/addTaskMidtermButton"
-                android:elevation="0dp"
-                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:textAlignment="center"
+                    android:id="@+id/addTaskMidtermButton"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Midterm"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:id="@+id/addTaskFinalButton"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:textAlignment="center"
+                    android:id="@+id/addTaskFinalButton"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Final"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:layout_margin="5dp"
-                android:id="@+id/addTaskProjectButton"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:textAlignment="center"
+                    android:id="@+id/addTaskProjectButton"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Project"/>
-            </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:id="@+id/addTaskPresentationButton"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
+                    android:id="@+id/addTaskPresentationButton"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Presentation"/>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                app:cardElevation="0dp"
-                android:id="@+id/addTaskAssignmentButton"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:textAlignment="center"
+                    android:id="@+id/addTaskAssignmentButton"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="Assignment"/>
-            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
@@ -141,18 +103,20 @@
         android:layout_width="match_parent"
         android:animateLayoutChanges="true"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addTaskLinearLayout"
+        android:layout_below="@id/addTaskTopLayout"
         android:id="@+id/addTaskScrollView">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:id="@+id/scrollViewRelativeLayout">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                android:id="@+id/addTestLinearLayout">
+                android:id="@+id/taskArgumentsLayout">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -164,7 +128,7 @@
                     android:background="@android:color/transparent"
                     android:textColorHint="@color/colorGrey"
                     android:hint="%"
-                    android:id="@+id/addTestPercentage" />
+                    android:id="@+id/addTaskPercentage" />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_margin="20dp"
@@ -189,49 +153,13 @@
                 <TimePicker
                     android:layout_width="match_parent"
                     android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginLeft="30dp"
                     android:id="@+id/addTestTimePicker"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical" android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/addProjectLinearLayout"
-                android:visibility="gone">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_margin="20dp"
-                    android:layout_height="wrap_content"
-                    style="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textAlignment="center"
-                    android:inputType="numberDecimal"
-                    android:background="@android:color/transparent"
-                    android:textColorHint="@color/colorGrey"
-                    android:hint="%"
-                    android:id="@+id/addProjectPercentage" />
-
-
-                <DatePicker
-                    android:id="@+id/addProjectDatePicker"
-                    android:layout_width="wrap_content"
-                    android:elevation="5dp"
-                    android:layout_height="wrap_content"
-                    android:spinnersShown="true"
-                    android:calendarTextColor="@color/white"
-                    android:layout_gravity="center"
-                    android:calendarViewShown="false"/>
-                <TimePicker
-                    android:layout_width="match_parent"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:id="@+id/addProjectTimePicker"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-        </RelativeLayout>
+</RelativeLayout>
 
     </ScrollView>
 

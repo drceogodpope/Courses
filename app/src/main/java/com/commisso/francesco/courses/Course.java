@@ -54,6 +54,13 @@ public class Course{
     }
 
 
+    //  SORTS ARRAYLIST OF COURSES IN ORDER OF SOONEST TASK
+
+//    public static ArrayList<Course> sortCourses(ArrayList<Course> courses){
+//
+//    }
+
+
 
     //GETTERS
     public long getId(){return this.id;}

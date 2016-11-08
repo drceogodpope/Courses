@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         coursesRecyclerView.setLayoutManager(mLayoutManager);
         coursesRecyclerView.setAdapter(new CourseAdapter(dbHelper.getCourses(dbHelper.getReadableDatabase())));
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        System.out.println(dbHelper.getTableAsString(dbHelper.getReadableDatabase(),DBHelper.PROJECT_TABLE_NAME));
+
     }
 
     @Override
