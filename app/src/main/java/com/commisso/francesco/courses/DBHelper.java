@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -121,7 +122,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 contentValues.put(PROJECT_COLUMN_ID, course.getId());
                 contentValues.put(PROJECT_COLUMN_PERCENTAGE, task.getPercentage());
                 contentValues.put(PROJECT_COLUMN_DATE, task.getDate().getMillis());
-                contentValues.put(PROJECT_COLUMN_TITLE, task.getTitle());
+                contentValues.put(PROJECT_COLUMN_TITLE, ((Project) task).getProjectType());
                 contentValues.put(PROJECT_COLUMN_GROUPMEMBERS, ((Project) task).getGroupMembers());
                 db.insert(PROJECT_TABLE_NAME, null, contentValues);
             }
@@ -137,6 +138,30 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //GETS
+
+    public Course getCourse(SQLiteDatabase db,long key){
+
+        Cursor c = db.rawQuery("SELECT * FROM " + COURSES_TABLE_NAME + " WHERE " + COURSES_COLUMN_ID + " = " + key,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        // WHERE 1"
+
+        if (c.moveToFirst()){
+            String title = c.getString(c.getColumnIndex(COURSES_COLUMN_NAME));
+            String courseCode = c.getString(c.getColumnIndex(COURSES_COLUMN_COURSE_CODE));
+            DateTime startDate = new DateTime(c.getLong(c.getColumnIndex(COURSES_COLUMN_START_DATE)));
+            DateTime endDate = new DateTime(c.getLong(c.getColumnIndex(COURSES_COLUMN_END_DATE)));
+            LocalTime time = new LocalTime(c.getString(c.getColumnIndex(COURSES_COLUMN_TIME)));
+            long id = c.getLong(c.getColumnIndex(COURSES_COLUMN_ID));
+            return new Course(title, courseCode, startDate, endDate, time, id);
+        }
+        return null;
+    }
+
+
+
+
+
+
+
 
     public ArrayList<Task> getTasks(SQLiteDatabase db,Course course){
         ArrayList<Task> tasks = new ArrayList<>();
@@ -171,7 +196,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<Task> getProjects(SQLiteDatabase db,Course course){
 
-
         Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE " + PROJECT_COLUMN_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
         // WHERE 1"
 
@@ -181,10 +205,8 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 DateTime date = new DateTime(c.getLong(c.getColumnIndex(PROJECT_COLUMN_DATE)));
                 double percentage = c.getDouble(c.getColumnIndex(PROJECT_COLUMN_PERCENTAGE));
-                String title  = c.getString(c.getColumnIndex(PROJECT_COLUMN_TITLE));
-                int length = c.getInt(c.getColumnIndex(PROJECT_COLUMN_LENGTH));
-                String groupMembers = c.getString(c.getColumnIndex(PROJECT_COLUMN_GROUPMEMBERS));
-                tests.add(new Project(percentage,date,title,groupMembers));
+                int projectType  = c.getInt(c.getColumnIndex(PROJECT_COLUMN_TITLE));
+                tests.add(new Project(percentage,date,projectType));
 
             } while (c.moveToNext());
         }
@@ -238,8 +260,6 @@ public class DBHelper extends SQLiteOpenHelper {
         c.close();
         return  courses;
     }
-
-
 
 
     public String getTableAsString(SQLiteDatabase db, String tableName) {

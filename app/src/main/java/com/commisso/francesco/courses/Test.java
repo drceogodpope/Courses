@@ -16,6 +16,15 @@ public class Test extends Task{
     private String topic = "";
     private int testType;
 
+    public Test(double percentage, DateTime date,int testType,double length) {
+        super(percentage, date);
+        this.testType = testType;
+        this.length = length;
+        this.topic = topic;
+        this.testType = testType;
+        setTestTitle(testType);
+    }
+
     public Test(double percentage, DateTime date,int testType,double length, String topic) {
         super(percentage, date);
         this.testType = testType;

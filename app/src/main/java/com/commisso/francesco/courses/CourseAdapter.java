@@ -21,7 +21,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
         this.courses = courses;
     }
 
-    public static class CourseCardViewHolder extends RecyclerView.ViewHolder {
+    public class CourseCardViewHolder extends RecyclerView.ViewHolder {
         protected TextView courseTitle;
         protected TextView courseCode;
         protected TextView courseTime;
@@ -40,12 +40,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent intent = new Intent(context,CourseActivity.class);
-                    intent.putExtra("position",getAdapterPosition());
+                    intent.putExtra("id",courses.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                 }
             });
-            v.setBackgroundColor(ContextCompat.getColor(v.getContext(),R.color.white));
         }
 
     }

@@ -54,6 +54,13 @@ public class Course{
     }
 
 
+    //  SORTS ARRAYLIST OF COURSES IN ORDER OF SOONEST TASK
+
+//    public static ArrayList<Course> sortCourses(ArrayList<Course> courses){
+//
+//    }
+
+
 
     //GETTERS
     public long getId(){return this.id;}
@@ -119,6 +126,11 @@ public class Course{
         this.id = id;
     }
     public void setTasks(ArrayList<Task> tasks){this.tasks = tasks;}
+
+
+    public void addTask(Task t){
+        this.tasks.add(t);
+    }
 
     @Override
     public String toString() {

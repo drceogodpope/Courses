@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -152,24 +151,20 @@ public class AddCourseActivity extends AppCompatActivity {
 
 
     public void createCourse(){
+
+        DateTimeUtils dateUtil  = new DateTimeUtils();
+
         String courseTitle = enterCourseTitle.getText().toString();
         String courseCode = enterCourseCode.getText().toString();
-        DateTime startDate = getDateTimeFromInputs(enterStartDate,enterTime);
-        DateTime endDate = getDateTimeFromInputs(enterEndDate,enterTime);
+        DateTime startDate = dateUtil.dateTimeFromPickers(enterStartDate,enterTime);
+        DateTime endDate = dateUtil.dateTimeFromPickers(enterEndDate,enterTime);
         LocalTime localTime = getTimeFromInputs(enterTime);
         DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.insertCourse(new Course(courseTitle,courseCode,startDate,endDate,localTime));
     }
 
-    public DateTime getDateTimeFromInputs(DatePicker datePicker,TimePicker timePicker){
 
-        int year = datePicker.getYear();
-        int month = datePicker.getMonth() + 1;
-        int dayOfMonth = datePicker.getDayOfMonth();
-        int hourOfDay = timePicker.getHour();
-        int minuteOfHour = timePicker.getMinute();
-        return new DateTime(year,month,dayOfMonth,hourOfDay,minuteOfHour);
-    }
+
 
     public LocalTime getTimeFromInputs(TimePicker timePicker){
         return new LocalTime(timePicker.getHour(),timePicker.getMinute());

@@ -24,7 +24,10 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
-        <activity android:name=".AddTaskActivity"/>
+        <activity
+            android:name=".AddTaskActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
 
     </application>
 

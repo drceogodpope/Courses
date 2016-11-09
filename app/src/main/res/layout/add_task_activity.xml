@@ -1,122 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/white"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/addTaskFloatingActionButton"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"/>
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:background="?attr/colorPrimary"
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_add_task_activity"
+                style="@style/TitleToolBar"/>
+
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:id="@+id/addTaskTopLayout"
+            android:layout_below="@id/toolbar"
+            android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:id="@+id/addTaskTestButton"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Test"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:textAlignment="center"
+                    android:id="@+id/addTaskMidtermButton"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Midterm"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:textAlignment="center"
+                    android:id="@+id/addTaskFinalButton"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Final"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:textAlignment="center"
+                    android:id="@+id/addTaskProjectButton"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Project"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:id="@+id/addTaskPresentationButton"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Presentation"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:textAlignment="center"
+                    android:id="@+id/addTaskAssignmentButton"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="Assignment"/>
+
+        </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:background="?attr/colorPrimary"
-        android:layout_height="wrap_content">
+        android:animateLayoutChanges="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addTaskTopLayout"
+        android:id="@+id/addTaskScrollView">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A D D  T A S K"
-            style="@style/TitleToolBar"/>
-
-
-    </android.support.v7.widget.Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:id="@+id/addTaskTaskTypeLayout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-
-        <android.support.v7.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Test"/>
-        </android.support.v7.widget.CardView>
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:id="@+id/scrollViewRelativeLayout">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Midterm"/>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Final"/>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:id="@+id/taskArgumentsLayout">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Project"/>
-        </android.support.v7.widget.CardView>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"
+                    android:inputType="numberDecimal"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/colorGrey"
+                    android:hint="%"
+                    android:id="@+id/addTaskPercentage" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="20dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAlignment="center"
+                    android:inputType="numberDecimal"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/colorGrey"
+                    android:id="@+id/addTestLength"
+                    android:hint="Length"/>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Presentation"/>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="0dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="Assignment"/>
-        </android.support.v7.widget.CardView>
-
-
-
-
-    </LinearLayout>
+                <DatePicker
+                    android:id="@+id/addTestDatePicker"
+                    android:layout_width="wrap_content"
+                    android:elevation="5dp"
+                    android:layout_height="wrap_content"
+                    android:spinnersShown="true"
+                    android:calendarTextColor="@color/white"
+                    android:layout_gravity="center"
+                    android:calendarViewShown="false"/>
+                <TimePicker
+                    android:layout_width="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/addTestTimePicker"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
 </RelativeLayout>
+
+    </ScrollView>
+
+    </RelativeLayout>
+
+
