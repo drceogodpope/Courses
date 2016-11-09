@@ -65,7 +65,7 @@ public class CourseActivity extends AppCompatActivity {
         recyclerView.setAdapter(new TaskAdapter(dbHelper.getTasks(dbHelper.getReadableDatabase(),course)));
 
 
-        title.setText(addSpaces(course.getTitle()));
+        title.setText(course.getTitle());
         courseCode.setText(course.getCourseCode());
         time.setText(course.getDay() +" "+ course.getTime());
         remainingDays.setText(String.valueOf(course.getNumberOfDays()));
