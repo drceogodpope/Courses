@@ -14,9 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by Francesco on 2016-10-28.
- */
+
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHolder> {
 

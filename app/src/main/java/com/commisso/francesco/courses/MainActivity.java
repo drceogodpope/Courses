@@ -20,10 +20,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton fab;
-    RecyclerView coursesRecyclerView;
-    LinearLayoutManager mLayoutManager;
-    DBHelper dbHelper;
+    private FloatingActionButton fab;
+    private RecyclerView coursesRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 
