@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         coursesRecyclerView.setAdapter(new CourseAdapter(dbHelper.getCourses(dbHelper.getReadableDatabase())));
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_action_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,19 +1,41 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="PurpleGreenLightAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPurple</item>
         <item name="colorPrimaryDark">@color/colorDarkPurple</item>
         <item name="colorAccent">@color/colorLimeGreen</item>
+        <item name="android:navigationBarColor">@color/colorGrey</item>
         <item name="android:textColor">@color/colorSoftBlack</item>
         <item name="android:textColorSecondary">@color/colorGrey</item>
         <item name="android:divider">@color/colorLightGrey</item>
         <item name="android:windowActivityTransitions">true</item>
-
         <item name="android:windowBackground">@color/colorPurple</item>
+    </style>
+
+    <style name="SoftLavender" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorLavender</item>
+        <item name="colorPrimaryDark">@color/colorDarkLavender</item>
+        <item name="colorAccent">@color/colorLightSteelBlue</item>
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:textColorSecondary">@color/colorLightGrey</item>
+        <item name="android:divider">@color/colorLightGrey</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:navigationBarColor">@color/colorLavender</item>
+    </style>
+
+    <style name="AccentTitle" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:titleTextColor">@color/white</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:padding">30dp</item>
 
     </style>
+
 
 
     <style name="TitleToolBar" parent="Base.TextAppearance.AppCompat.Large">

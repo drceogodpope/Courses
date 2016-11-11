@@ -72,6 +72,8 @@ public class AddTaskActivity extends AppCompatActivity {
         scrollViewRelativeLayout = (RelativeLayout) findViewById(R.id.scrollViewRelativeLayout);
 
         fab = (FloatingActionButton) findViewById(R.id.addTaskFloatingActionButton);
+        fab.setImageResource(R.drawable.ic_done);
+        fab.setVisibility(View.INVISIBLE);
 
         testButton = (TextView) findViewById(R.id.addTaskTestButton);
         midtermButton = (TextView) findViewById(R.id.addTaskMidtermButton);
@@ -189,6 +191,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 topLayout.removeView(t);
             }
         }
+        fab.setVisibility(View.VISIBLE);
     }
 
     public Test makeTest(){

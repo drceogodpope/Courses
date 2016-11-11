@@ -58,6 +58,7 @@ public class CourseActivity extends AppCompatActivity {
         remainingDays = (TextView) findViewById(R.id.textViewNumberOfDays);
         teacher = (TextView) findViewById(R.id.textViewTeacher);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonCourseActivity);
+        fab.setImageResource(R.drawable.ic_action_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.tasksRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);

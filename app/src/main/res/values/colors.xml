@@ -12,6 +12,18 @@
     <color name="colorGreen">#4CAF50</color>
     <color name="colorRed">#D32F2F</color>
 
+
+    <color name="colorDarkLavender">#603A56</color>
+    <color name="colorLavender">#754668</color>
+    <color name="colorPerl">#EAE0CC</color>
+    <color name="colorLightSteelBlue">#A7C6DA</color>
+    <color name="colorGrannySmith">#A9E190</color>
+
+
+
+
+
+
     <color name="colorDarkPurple">#512DA8</color>
     <color name="colorPurple">#673AB7</color>
     <color name="colorLightPurple">#D1C4E9</color>

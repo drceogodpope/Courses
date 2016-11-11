@@ -67,6 +67,7 @@ public class AddCourseActivity extends AppCompatActivity {
         addEndDateLayout = (LinearLayout) findViewById(R.id.layoutEnterCourseEndDate);
         addTimeLayout = (LinearLayout) findViewById(R.id.layoutEnterCourseTime);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setImageResource(R.drawable.ic_action_arrow_right);
 
         //array of layouts to show and hide
         layouts = new ArrayList<>();
@@ -136,6 +137,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 TextView tv = new TextView(getApplicationContext());
                 tv.setVisibility(View.INVISIBLE);
                 finalLinearLayout.addView(tv);
+                fab.setImageResource(R.drawable.ic_done);
             }
 
             currentLayout = -1;
