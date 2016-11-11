@@ -27,7 +27,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
         protected TextView courseTime;
         protected CardView cardView;
         long courseId = -1;
-        protected View v;
 
         public CourseCardViewHolder(View v) {
             super(v);

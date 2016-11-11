@@ -91,12 +91,13 @@ public class Course{
     public long getEndDateMillis() {
         return endDate.getMillis();
     }
+    public DateTime getEndDate(){
+        return endDate;
+    }
     public long getStartDateMillis() {
         return startDate.getMillis();
     }
-    public int getNumberOfDays(){
-        return Days.daysBetween(new DateTime().toLocalDate(),endDate.toLocalDate()).getDays();
-    }
+
 
     public static LocalTime makeLocalTime(String time){
         DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss");
@@ -109,11 +110,6 @@ public class Course{
 
     public ArrayList<Task> getTasks() {
         return tasks;
-    }
-
-    public static int parseDays(Days days) {
-        //RETURNS NUMBER OF DAYS AS INTEGER
-        return Integer.parseInt(days.toString().substring(1, days.toString().length() - 1));
     }
 
 
@@ -141,9 +137,8 @@ public class Course{
                 "Course Code: " + courseCode +"\n" +
                 "Start Date: " + startDate +"\n" +
                 "End Date: " + endDate +"\n" +
-                "Number of Days: " + getNumberOfDays() +"\n" +
+                "Number of Days: " + DateTimeUtils.daysRemaining(endDate) +"\n" +
                 "Time: " + getTimeHHMMSS() +"\n" +
                 "Course ID: " + getId());
-
     }
 }

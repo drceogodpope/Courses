@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 /**
  * Created by Francesco on 2016-11-03.
@@ -25,6 +26,12 @@ public class DateTimeUtils {
 
     public static boolean checkEditTextEmpty(EditText editText){
         return ((editText.getText().toString().trim().length()>0));
+    }
+
+    public static int daysRemaining(DateTime date){
+        int numberOfDays = Days.daysBetween(new DateTime().toLocalDate(),date.toLocalDate()).getDays();
+        if (numberOfDays>0){return numberOfDays;}
+        return 0;
     }
 
 }

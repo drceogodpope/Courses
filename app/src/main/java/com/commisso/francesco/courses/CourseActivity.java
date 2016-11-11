@@ -68,7 +68,7 @@ public class CourseActivity extends AppCompatActivity {
         title.setText(course.getTitle());
         courseCode.setText(course.getCourseCode());
         time.setText(course.getDay() +" "+ course.getTime());
-        remainingDays.setText(String.valueOf(course.getNumberOfDays()));
+        remainingDays.setText(String.valueOf(DateTimeUtils.daysRemaining(course.getEndDate())));
 
 
         sb = (SeekBar) findViewById(R.id.progressBar);
@@ -103,15 +103,7 @@ public class CourseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
-    public String addSpaces(String word){
-        String result = "";
-        for(int i=0;i<word.length();i++){
-            result+=word.substring(i,i+1);
-            result+=" ";
-        }
-        return result;
 
-    }
 
 
 }

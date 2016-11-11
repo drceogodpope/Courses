@@ -21,7 +21,7 @@ public abstract class Task {
 
     public DateTime getDate() {return date;}
 
-    public int getDays(){return Days.daysBetween(new DateTime().toLocalDate(),date.toLocalDate()).getDays();}
+    public int getDays(){return DateTimeUtils.daysRemaining(date);}
 
 
     //SETTERS
