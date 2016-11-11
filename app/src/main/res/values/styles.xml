@@ -24,7 +24,7 @@
         <item name="android:divider">@color/colorLightGrey</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="android:navigationBarColor">@color/colorLavender</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
     </style>
 
     <style name="AccentTitle" parent="Base.TextAppearance.AppCompat.Large">

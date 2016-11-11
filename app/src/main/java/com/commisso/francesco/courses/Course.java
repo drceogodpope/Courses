@@ -97,6 +97,7 @@ public class Course{
     public long getStartDateMillis() {
         return startDate.getMillis();
     }
+    public DateTime getStartDate(){return startDate;}
 
 
     public static LocalTime makeLocalTime(String time){

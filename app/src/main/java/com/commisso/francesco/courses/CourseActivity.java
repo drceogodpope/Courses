@@ -3,6 +3,7 @@ package com.commisso.francesco.courses;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,11 +33,11 @@ public class CourseActivity extends AppCompatActivity {
     TextView courseCode;
     TextView time;
     TextView remainingDays;
-    TextView teacher;
     FloatingActionButton fab;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     DBHelper dbHelper;
+    int daysLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,6 @@ public class CourseActivity extends AppCompatActivity {
         courseCode = (TextView) findViewById(R.id.textViewCourseCode);
         time = (TextView) findViewById(R.id.textViewTime);
         remainingDays = (TextView) findViewById(R.id.textViewNumberOfDays);
-        teacher = (TextView) findViewById(R.id.textViewTeacher);
         fab = (FloatingActionButton) findViewById(R.id.floatingActionButtonCourseActivity);
         fab.setImageResource(R.drawable.ic_action_add);
 
@@ -69,18 +69,14 @@ public class CourseActivity extends AppCompatActivity {
         title.setText(course.getTitle());
         courseCode.setText(course.getCourseCode());
         time.setText(course.getDay() +" "+ course.getTime());
-        remainingDays.setText(String.valueOf(DateTimeUtils.daysRemaining(course.getEndDate())));
+        setRemainingDays();
 
 
         sb = (SeekBar) findViewById(R.id.progressBar);
-        sb.setMax(10);
-        sb.getThumb().mutate().setAlpha(0);
-        sb.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return false;
-            }
-        });
+        initializeSeekBar();
+
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +90,27 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setRemainingDays(){
+
+        daysLeft = DateTimeUtils.daysRemaining(course.getEndDate());
+        remainingDays.setText(String.valueOf(daysLeft));
+
+    }
+
+    public void initializeSeekBar(){
+        final int maxDays = DateTimeUtils.daysBetween(course.getStartDate(),course.getEndDate());
+
+        sb.setMax(maxDays);
+        sb.getThumb().mutate().setAlpha(0);
+        sb.setProgress(daysLeft);
+        sb.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     @Override

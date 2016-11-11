@@ -34,4 +34,8 @@ public class DateTimeUtils {
         return 0;
     }
 
+    public static int daysBetween(DateTime earlierDate,DateTime laterDate){
+        return Days.daysBetween(earlierDate.toLocalDate(),laterDate.toLocalDate()).getDays();
+    }
+
 }

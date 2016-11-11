@@ -26,6 +26,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
         protected TextView courseCode;
         protected TextView courseTime;
         protected CardView cardView;
+        protected TextView daysLeft;
         long courseId = -1;
 
         public CourseCardViewHolder(View v) {
@@ -34,6 +35,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
             courseCode = (TextView)  v.findViewById(R.id.course_card_code);
             courseTime = (TextView)  v.findViewById(R.id.course_card_time);
             cardView = (CardView) v.findViewById(R.id.course_card_card);
+            daysLeft = (TextView) v.findViewById(R.id.courseCardDaysLeft);
+
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -55,6 +58,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
         holder.courseCode.setText(c.getCourseCode());
         holder.courseTime.setText(c.getDay()+" " +c.getTime());
         holder.courseId = c.getId();
+        holder.daysLeft.setText(String.valueOf(DateTimeUtils.daysRemaining(c.getEndDate())));
     }
 
     @Override

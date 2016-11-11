@@ -35,13 +35,17 @@
                 android:text="Class Title"
                 android:padding="10dp" />
 
-            <SeekBar
+            <TextView
                 style="@android:style/Widget.DeviceDefault.Light.SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/colorLightGrey"
                 android:max="10"
+                android:textSize="25dp"
+                android:gravity="right|center"
                 android:progress="3"
-                android:id="@+id/seekBar"
+                android:text="##"
+                android:id="@+id/courseCardDaysLeft"
                 android:layout_weight="1" />
 
 
