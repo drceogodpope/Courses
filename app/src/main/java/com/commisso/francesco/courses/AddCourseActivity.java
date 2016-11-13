@@ -162,7 +162,11 @@ public class AddCourseActivity extends AppCompatActivity {
         DateTime endDate = dateUtil.dateTimeFromPickers(enterEndDate,enterTime);
         LocalTime localTime = getTimeFromInputs(enterTime);
         DBHelper dbHelper = DBHelper.getInstance(getApplicationContext());
-        dbHelper.insertCourse(new Course(courseTitle,courseCode,startDate,endDate,localTime));
+
+
+        Course c =new Course(courseTitle,courseCode,startDate,endDate,localTime);
+        System.out.println("Course created: " + c.toString());
+        dbHelper.insertCourse(c);
     }
 
 

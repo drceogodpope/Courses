@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         coursesRecyclerView = (RecyclerView) findViewById(R.id.coursesRecyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         coursesRecyclerView.setLayoutManager(mLayoutManager);
-        coursesRecyclerView.setAdapter(new CourseAdapter(dbHelper.getCourses(dbHelper.getReadableDatabase())));
+        coursesRecyclerView.setAdapter(new CourseAdapter(dbHelper.getCourses()));
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_action_add);
@@ -66,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        System.out.println("*** BEFORE \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
+                             dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
+                              dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
+                            "*** \n");
+
+
+        System.out.println("*** AFTER \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
+                dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
+                dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
+                "*** \n");
+
 
     }
 
