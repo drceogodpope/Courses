@@ -10,7 +10,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -18,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "DataBase.db";
 
     public static final String COURSES_TABLE_NAME = "courses";
-    public static final String COURSES_COLUMN_ID = "_id";
+    public static final String COURSES_COLUMN_ID = "courseID";
     public static final String COURSES_COLUMN_NAME = "courseName";
     public static final String COURSES_COLUMN_COURSE_CODE = "courseCode";
     public static final String COURSES_COLUMN_START_DATE = "startDate";
@@ -27,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String TESTS_TABLE_NAME = "test";
     public static final String TESTS_COLUMN_ID = "_id";
+    public static final String TESTS_COLUMN_COURSE_ID = "courseID";
     public static final String TESTS_COLUMN_PERCENTAGE = "percentage";
     public static final String TESTS_COLUMN_DATE = "date";
     public static final String TESTS_COLUMN_TITLE = "title";
@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String PROJECT_TABLE_NAME = "project";
     public static final String PROJECT_COLUMN_ID = "_id";
+    public static final String PROJECT_COLUMN_COURSE_ID = "courseID";
     public static final String PROJECT_COLUMN_PERCENTAGE = "percentage";
     public static final String PROJECT_COLUMN_DATE = "date";
     public static final String PROJECT_COLUMN_TITLE = "title";
@@ -63,16 +64,16 @@ public class DBHelper extends SQLiteOpenHelper {
         );
 
         db.execSQL(
-                "create table " + TESTS_TABLE_NAME + "(" + TESTS_COLUMN_ID +" INTEGER, " + TESTS_COLUMN_PERCENTAGE + " INTEGER, " + TESTS_COLUMN_DATE +" INTEGER, " + TESTS_COLUMN_TITLE + " INTEGER, " + TESTS_COLUMN_LENGTH + " INTEGER, " + TESTS_COLUMN_TOPIC + " TEXT, " + TESTS_COLUMN_TESTTYPE + " INT)"
+                "create table " + TESTS_TABLE_NAME + "(" + TESTS_COLUMN_ID + " INTEGER PRIMARY KEY, " + TESTS_COLUMN_COURSE_ID +" INTEGER, " + TESTS_COLUMN_PERCENTAGE + " INTEGER, " + TESTS_COLUMN_DATE +" INTEGER, " + TESTS_COLUMN_TITLE + " INTEGER, " + TESTS_COLUMN_LENGTH + " INTEGER, " + TESTS_COLUMN_TOPIC + " TEXT, " + TESTS_COLUMN_TESTTYPE + " INT)"
         );
 
         db.execSQL(
-                "create table " + PROJECT_TABLE_NAME + "(" + PROJECT_COLUMN_ID +" INTEGER, " + PROJECT_COLUMN_PERCENTAGE + " INTEGER, " + PROJECT_COLUMN_DATE +" INTEGER, " + PROJECT_COLUMN_TITLE + " INTEGER, " + PROJECT_COLUMN_LENGTH + " INTEGER, " + PROJECT_COLUMN_GROUPMEMBERS + " TEXT)"
+                "create table " + PROJECT_TABLE_NAME + "(" + PROJECT_COLUMN_ID + " INTEGER PRIMARY KEY, " +  PROJECT_COLUMN_COURSE_ID +" INTEGER, " + PROJECT_COLUMN_PERCENTAGE + " INTEGER, " + PROJECT_COLUMN_DATE +" INTEGER, " + PROJECT_COLUMN_TITLE + " INTEGER, " + PROJECT_COLUMN_LENGTH + " INTEGER, " + PROJECT_COLUMN_GROUPMEMBERS + " TEXT)"
         );
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db,int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + COURSES_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ TESTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ PROJECT_TABLE_NAME);
@@ -101,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
             if(task instanceof Test){
                 SQLiteDatabase db = this.getReadableDatabase();
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(TESTS_COLUMN_ID, course.getId());
+                contentValues.put(TESTS_COLUMN_COURSE_ID, course.getId());
                 contentValues.put(TESTS_COLUMN_PERCENTAGE, task.getPercentage());
                 contentValues.put(TESTS_COLUMN_DATE, task.getDate().getMillis());
                 contentValues.put(TESTS_COLUMN_TITLE, task.getTitle());
@@ -119,7 +120,7 @@ public class DBHelper extends SQLiteOpenHelper {
             if(task instanceof Project){
                 SQLiteDatabase db = this.getReadableDatabase();
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(PROJECT_COLUMN_ID, course.getId());
+                contentValues.put(PROJECT_COLUMN_COURSE_ID, course.getId());
                 contentValues.put(PROJECT_COLUMN_PERCENTAGE, task.getPercentage());
                 contentValues.put(PROJECT_COLUMN_DATE, task.getDate().getMillis());
                 contentValues.put(PROJECT_COLUMN_TITLE, ((Project) task).getProjectType());
@@ -139,7 +140,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //GETS
 
-    public Course getCourse(SQLiteDatabase db,long key){
+    public Course getCourse(long key){
+
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor c = db.rawQuery("SELECT * FROM " + COURSES_TABLE_NAME + " WHERE " + COURSES_COLUMN_ID + " = " + key,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
         // WHERE 1"
@@ -160,21 +163,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
-    public ArrayList<Task> getTasks(SQLiteDatabase db,Course course){
+    public ArrayList<Task> getTasks(Course course){
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Task> tasks = new ArrayList<>();
 
-        tasks.addAll(getTests(db,course));
-        tasks.addAll(getProjects(db,course));
+        tasks.addAll(getTests(course));
+        tasks.addAll(getProjects(course));
 
         return tasks;
     }
 
-    public ArrayList<Task> getTests(SQLiteDatabase db,Course course){
+    public ArrayList<Task> getTests(Course course){
 
-        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME + " WHERE " + TESTS_COLUMN_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME + " WHERE " + TESTS_COLUMN_COURSE_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
         // WHERE 1"
 
         ArrayList<Task> tests = new ArrayList<>();
@@ -186,7 +189,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 String topic  = c.getString(c.getColumnIndex(TESTS_COLUMN_TOPIC));
                 int length = c.getInt(c.getColumnIndex(TESTS_COLUMN_LENGTH));
                 int testType = c.getInt(c.getColumnIndex(TESTS_COLUMN_TESTTYPE));
-                tests.add(new Test(percentage,date,testType,length,topic));
+                long id = c.getLong(c.getColumnIndex(TESTS_COLUMN_ID));
+                tests.add(new Test(percentage,date,testType,length,topic,id));
 
             } while (c.moveToNext());
         }
@@ -194,9 +198,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return  tests;
     }
 
-    public ArrayList<Task> getProjects(SQLiteDatabase db,Course course){
+    public ArrayList<Task> getProjects(Course course){
 
-        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE " + PROJECT_COLUMN_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE " + PROJECT_COLUMN_COURSE_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
         // WHERE 1"
 
         ArrayList<Task> tests = new ArrayList<>();
@@ -206,7 +211,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DateTime date = new DateTime(c.getLong(c.getColumnIndex(PROJECT_COLUMN_DATE)));
                 double percentage = c.getDouble(c.getColumnIndex(PROJECT_COLUMN_PERCENTAGE));
                 int projectType  = c.getInt(c.getColumnIndex(PROJECT_COLUMN_TITLE));
-                tests.add(new Project(percentage,date,projectType));
+                long id = c.getLong(c.getColumnIndex(PROJECT_COLUMN_ID));
+                tests.add(new Project(percentage,date,projectType,id));
 
             } while (c.moveToNext());
         }
@@ -215,23 +221,58 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean deleteTest(long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+            return db.delete(TESTS_TABLE_NAME, TESTS_COLUMN_ID + "=" + id, null) > 0;
 
-    public boolean updateValueString(SQLiteDatabase db,String tableName, long id,String column, String value){
+    }
+
+    public boolean deleteProject(long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(PROJECT_TABLE_NAME, PROJECT_COLUMN_ID + "=" + id, null) > 0;
+    }
+
+    private boolean deleteAllCourseTests(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TESTS_TABLE_NAME, TESTS_COLUMN_COURSE_ID + "=" + c.getId(), null) > 0;
+    }
+
+    private boolean deleteAllCourseProjects(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(PROJECT_TABLE_NAME, PROJECT_COLUMN_COURSE_ID + "=" + c.getId(), null) > 0;
+    }
+
+
+    public boolean deleteCourse(Course c){
+        SQLiteDatabase db = this.getWritableDatabase();
+        deleteAllCourseTests(c);
+        deleteAllCourseProjects(c);
+        return db.delete(COURSES_TABLE_NAME, COURSES_COLUMN_ID + "=" + c.getId(), null) > 0;
+    }
+
+
+    public boolean updateValueString(String tableName, long id,String column, String value){
         //p3 = ID OF ROW YOU WANT TO CHANGE, p4 = NAME OF COLUMN YOU WANT TO ENTER,
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
         ContentValues newValues = new ContentValues();
         newValues.put(column,value);
         db.update(tableName,newValues, DBHelper.COURSES_COLUMN_ID+"="+ id,null);
         return true;
     }
 
-    public boolean updateValueInt(SQLiteDatabase db,String tableName, long id,String column, int value){
+    public boolean updateValueInt(String tableName, long id,String column, int value){
+        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(column,value);
         db.update(tableName,newValues, DBHelper.COURSES_COLUMN_ID+"="+ id,null);
         return true;
     }
 
-    public boolean updateValueLong(SQLiteDatabase db,String tableName, long id,String column, long value){
+    public boolean updateValueLong(String tableName, long id,String column, long value){
+        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues newValues = new ContentValues();
         newValues.put(column,value);
         db.update(tableName,newValues, DBHelper.COURSES_COLUMN_ID+"="+ id,null);
@@ -239,12 +280,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Course> getCourses(SQLiteDatabase db){
-
+    public ArrayList<Course> getCourses(){
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Course> courses = new ArrayList<>();
         Cursor c = db.query(COURSES_TABLE_NAME,null," 1",null,null,null,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
                                                                                 // WHERE 1"
-        courses.clear();
         if (c.moveToFirst()) {
             do {
                 String title = c.getString(c.getColumnIndex(COURSES_COLUMN_NAME));
@@ -262,7 +302,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public String getTableAsString(SQLiteDatabase db, String tableName) {
+    public String getTableAsString(String tableName) {
+        SQLiteDatabase db = this.getReadableDatabase();
         String tableString = String.format("Table %s:\n", tableName);
         Cursor allRows  = db.rawQuery("SELECT * FROM " + tableName, null);
         if (allRows.moveToFirst() ){

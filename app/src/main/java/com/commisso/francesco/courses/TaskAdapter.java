@@ -19,10 +19,13 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHolder> {
 
     private ArrayList<Task> tasks;
+    private long id; // REMOVE ME AFTER TASK COURSE IS MADE AND YOU CAN DELETE FROM THERE !!
 
-    public TaskAdapter(ArrayList<Task> tasks) {
+    // REMOVE long courseID AFTER TASK COURSE IS MADE AND DELETE FROM THERE
+    public TaskAdapter(ArrayList<Task> tasks,long courseID) {
         super();
         this.tasks = tasks;
+        this.id = courseID;
     }
 
     @Override
@@ -51,10 +54,33 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHo
     }
 
     @Override
-    public void onBindViewHolder(TaskCardViewHolder holder, int position) {
-        Task t = tasks.get(position);
+    public void onBindViewHolder(final TaskCardViewHolder holder, int position) {
+        final Task t = tasks.get(position);
         holder.title.setText(t.getTitle());
         holder.daysLeft.setText(String.valueOf(t.getDays()));
         holder.percentage.setText(String.valueOf((int)t.getPercentage()) + "%");
+
+        //REMOVE ALL THIS STUFF AFTER TASK COURSE IS MADE AND DELETE FROM THERE !!
+
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                DBHelper dbHelper = DBHelper.getInstance(Courses.getAppContext());
+                if(t instanceof Test){
+                    System.out.println("TEST");
+                    System.out.println("T.ID: "+String.valueOf(t.getId()));
+                    dbHelper.deleteTest(t.getId());
+                }
+                else {
+                    System.out.println("PROJECT");
+                    dbHelper.deleteProject(t.getId());
+                }
+
+                tasks = dbHelper.getTasks(dbHelper.getCourse(id));
+                notifyItemRangeChanged(holder.getAdapterPosition(), tasks.size());
+                notifyItemRemoved(holder.getAdapterPosition());
+                return false;
+            }
+        });
     }
 }

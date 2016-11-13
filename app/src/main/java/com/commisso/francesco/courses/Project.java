@@ -17,11 +17,17 @@ public  class Project extends Task {
         super(percentage, date);
         this.projectType = projectType;
     }
+    public Project(double percentage, DateTime date,int projectType,long id) {
+        super(percentage, date);
+        this.projectType = projectType;
+        this.id = id;
+    }
 
-    public Project(double percentage, DateTime date,String title,String groupMembers,int projectType) {
+    public Project(double percentage, DateTime date,String title,String groupMembers,int projectType,long id) {
         super(percentage, date);
         this.groupMembers = groupMembers;
         this.title = title;
+        this.id = id;
         this.projectType = projectType;
     }
 

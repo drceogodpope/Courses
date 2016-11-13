@@ -8,6 +8,7 @@ public abstract class Task {
     protected String title;
     protected double percentage;
     protected DateTime date;
+    protected long id;
 
     public Task(double percentage,DateTime date){
         this.percentage = percentage;
@@ -23,6 +24,9 @@ public abstract class Task {
 
     public int getDays(){return DateTimeUtils.daysRemaining(date);}
 
+    public long getId() {
+        return id;
+    }
 
     //SETTERS
     public void setDate(DateTime date) {
@@ -35,5 +39,9 @@ public abstract class Task {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

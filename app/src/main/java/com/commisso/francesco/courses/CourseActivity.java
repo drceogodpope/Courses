@@ -48,8 +48,8 @@ public class CourseActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         dbHelper = DBHelper.getInstance(getApplicationContext());
-        if( dbHelper.getCourse(dbHelper.getReadableDatabase(),intent.getLongExtra("id",1)) != null){
-            course = dbHelper.getCourse(dbHelper.getReadableDatabase(),intent.getLongExtra("id",1));
+        if( dbHelper.getCourse(intent.getLongExtra("id",1)) != null){
+            course = dbHelper.getCourse(intent.getLongExtra("id",1));
         }
 
 
@@ -63,7 +63,7 @@ public class CourseActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.tasksRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TaskAdapter(dbHelper.getTasks(dbHelper.getReadableDatabase(),course)));
+        recyclerView.setAdapter(new TaskAdapter(dbHelper.getTasks(course),course.getId()));
 
 
         title.setText(course.getTitle());

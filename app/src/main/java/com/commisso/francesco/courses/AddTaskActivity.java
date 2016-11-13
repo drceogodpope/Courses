@@ -63,7 +63,7 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.add_task_activity);
         final Intent intent = getIntent();
         dbHelper =  DBHelper.getInstance(getApplicationContext());
-        course = dbHelper.getCourse(dbHelper.getReadableDatabase(),intent.getLongExtra("id",-1));
+        course = dbHelper.getCourse(intent.getLongExtra("id",-1));
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         topLayout = (LinearLayout) findViewById(R.id.addTaskTopLayout);
