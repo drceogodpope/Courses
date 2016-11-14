@@ -1,5 +1,7 @@
 package com.commisso.francesco.courses;
 
+import android.support.v4.content.ContextCompat;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalTime;
@@ -129,6 +131,21 @@ public class Course{
         this.tasks.add(t);
     }
 
+
+    //STATIC
+
+    public static int decideTextColour(Course c){
+
+        int redThreshold = 7;
+
+        if(DateTimeUtils.daysRemaining(c.getEndDate())<=redThreshold){
+            return ContextCompat.getColor(Courses.getAppContext(),R.color.colorLavender);
+        }
+            return ContextCompat.getColor(Courses.getAppContext(),R.color.colorLightSteelBlue);
+
+    }
+
+
     @Override
     public String toString() {
         return (
@@ -142,4 +159,7 @@ public class Course{
                 "Time: " + getTimeHHMMSS() +"\n" +
                 "Course ID: " + getId());
     }
+
+
+
 }
