@@ -14,9 +14,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,16 +70,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        System.out.println("*** BEFORE \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
-                             dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
-                              dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
-                            "*** \n");
+//        System.out.println("*** BEFORE \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
+//                             dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
+//                              dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
+//                            "*** \n");
 
-
-        System.out.println("*** AFTER \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
-                dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
-                dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
-                "*** \n");
+//        System.out.println("*** AFTER \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
+//                dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
+//                dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
+//                "*** \n");
 
 
     }

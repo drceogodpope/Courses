@@ -2,8 +2,10 @@ package com.commisso.francesco.courses;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-public abstract class Task {
+public abstract class Task{
 
     protected String title;
     protected double percentage;
@@ -15,8 +17,15 @@ public abstract class Task {
         this.date = date;
     }
 
+
+
+
+
+
+
     //GETTERS
     public String getTitle() {return title;}
+
 
     public double getPercentage() {return percentage;}
 

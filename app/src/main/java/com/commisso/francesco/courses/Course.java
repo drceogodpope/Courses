@@ -10,10 +10,11 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // A CLASS TO HOLD TO HOLD COURSE INFORMATION
 
-public class Course{
+public class Course implements Comparator<Course> {
 
     private long id;
     private String title;
@@ -116,6 +117,7 @@ public class Course{
     }
 
 
+
     //SETTERS
     public void setTextbook(String textbook){this.textbook = textbook;}
     public void setTeacher(String teacher){
@@ -160,6 +162,13 @@ public class Course{
                 "Course ID: " + getId());
     }
 
+    @Override
+    public int compare(Course course, Course course1) {
 
+        if(course.getTasks().get(0).getDate() == null || course1.getTasks().get(0).getDate() == null){
+            return 0;
+        }
 
+        return course.getTasks().get(0).getDate().compareTo(course1.getTasks().get(0).getDate());
+    }
 }
