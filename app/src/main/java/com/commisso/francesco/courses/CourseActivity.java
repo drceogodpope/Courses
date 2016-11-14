@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
@@ -45,6 +46,9 @@ public class CourseActivity extends AppCompatActivity {
         setContentView(R.layout.course_activity);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         Intent intent = getIntent();
 
         dbHelper = DBHelper.getInstance(getApplicationContext());
@@ -70,6 +74,8 @@ public class CourseActivity extends AppCompatActivity {
         courseCode.setText(course.getCourseCode());
         time.setText(course.getDay() +" "+ course.getTime());
         setRemainingDays();
+        setRemainingDaysColour();
+
 
 
         sb = (SeekBar) findViewById(R.id.progressBar);
@@ -93,10 +99,12 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void setRemainingDays(){
-
         daysLeft = DateTimeUtils.daysRemaining(course.getEndDate());
         remainingDays.setText(String.valueOf(daysLeft));
+    }
 
+    public void setRemainingDaysColour(){
+        remainingDays.setTextColor(Course.decideTextColour(course));
     }
 
     public void initializeSeekBar(){
@@ -121,7 +129,29 @@ public class CourseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.course_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_delete_course:
+                deleteCourse();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
+    public void deleteCourse(){
+        dbHelper.deleteCourse(course);
+        onBackPressed();
+    }
 
 }
