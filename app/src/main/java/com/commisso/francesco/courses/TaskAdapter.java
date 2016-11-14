@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHolder> {

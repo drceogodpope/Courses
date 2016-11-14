@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * ACTIVITY TO VIEW THE INFO FOR A SPECIFIC COURSE
@@ -109,10 +110,11 @@ public class CourseActivity extends AppCompatActivity {
 
     public void initializeSeekBar(){
         final int maxDays = DateTimeUtils.daysBetween(course.getStartDate(),course.getEndDate());
+        int daysElapsed = DateTimeUtils.daysBetween(course.getStartDate(),new DateTime());
 
         sb.setMax(maxDays);
         sb.getThumb().mutate().setAlpha(0);
-        sb.setProgress(daysLeft);
+        sb.setProgress(daysElapsed);
         sb.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {

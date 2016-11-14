@@ -5,11 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -161,15 +165,31 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-
-
     public ArrayList<Task> getTasks(Course course){
-        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Task> tasks = new ArrayList<>();
 
         tasks.addAll(getTests(course));
         tasks.addAll(getProjects(course));
 
+        System.out.println("GETTING TASKS");
+        System.out.println("GOT:");
+
+        for(Task t:tasks){
+            System.out.println(String.valueOf(t.getPercentage()));
+        }
+
+        Collections.sort(tasks, new Comparator<Task>() {
+            public int compare(Task t1, Task t2) {
+                return t1.getDate().compareTo(t2.getDate());
+            }
+        });
+
+        System.out.println("SORTING TASKS");
+        System.out.println("GOT:");
+
+        for(Task t:tasks){
+            System.out.println(String.valueOf(t.getPercentage()));
+        }
         return tasks;
     }
 
@@ -297,10 +317,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
             } while (c.moveToNext());
         }
+
+        Collections.sort(courses, new Comparator<Course>() {
+            public int compare(Course c1, Course c2) {
+                if(DBHelper.this.getTasks(c1).size()<1 || DBHelper.this.getTasks(c2).size()<1 ){
+                    return 0;
+                }
+                return DBHelper.this.getTasks(c1).get(0).getDate().compareTo(DBHelper.this.getTasks(c2).get(0).getDate());
+            }
+        });
+
         c.close();
         return  courses;
     }
-
 
     public String getTableAsString(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
