@@ -320,13 +320,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Collections.sort(courses, new Comparator<Course>() {
             public int compare(Course c1, Course c2) {
-                if(DBHelper.this.getTasks(c1).size()<1 || DBHelper.this.getTasks(c2).size()<1 ){
-                    return 0;
+                if(DBHelper.this.getTasks(c1).size()<1){
+                    return 1;
+                }
+                if(DBHelper.this.getTasks(c2).size()<1 ){
+                    return -1;
                 }
                 return DBHelper.this.getTasks(c1).get(0).getDate().compareTo(DBHelper.this.getTasks(c2).get(0).getDate());
             }
         });
-
         c.close();
         return  courses;
     }
