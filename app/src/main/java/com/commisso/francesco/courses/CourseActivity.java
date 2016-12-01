@@ -172,7 +172,7 @@ public class CourseActivity extends AppCompatActivity {
             NotificationCompat.Builder notifBuilder =
                     new NotificationCompat.Builder(this)
                             .setContentTitle(course.getTitle())
-                            .setContentText(ta.getTask(0).getTitle() + " in " +String.valueOf(daysLeft) + " Days")
+                            .setContentText(getNotificationText())
                             .setTicker("Alert New Message")
                             .setSmallIcon(R.drawable.cast_ic_notification_small_icon); // change me to app icon
             notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -187,6 +187,14 @@ public class CourseActivity extends AppCompatActivity {
             notifActive = false;
         }
 
+    }
+
+    public String getNotificationText(){
+        if(ta.getItemCount()>0){
+            Task t = ta.getTask(0);
+            return t.getTitle() + " in " +String.valueOf(t.getDays()) + " Days";
+        }
+        else return String.valueOf(daysLeft) + " days left in course.";
     }
 
 
