@@ -112,6 +112,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void setRemainingDays(){
+        Log.d(tag,"setRemainingDays()");
         daysLeft = DateTimeUtils.daysRemaining(course.getEndDate());
         remainingDays.setText(String.valueOf(daysLeft));
     }
@@ -121,9 +122,10 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void initializeSeekBar(){
+        Log.d(tag,"initializeSeekBar()");
         final int maxDays = DateTimeUtils.daysBetween(course.getStartDate(),course.getEndDate());
         int daysElapsed = DateTimeUtils.daysBetween(course.getStartDate(),new DateTime());
-
+        Log.d(tag,"daysElapsed = " + daysElapsed);
         sb.setMax(maxDays);
         sb.getThumb().mutate().setAlpha(0);
         sb.setProgress(daysElapsed);
@@ -157,7 +159,7 @@ public class CourseActivity extends AppCompatActivity {
                 deleteCourse();
                 return true;
             case R.id.notification_toggle:
-//                toggleCourseNotifications();
+                toggleCourseNotifications();
                 return true;
 
             default:
