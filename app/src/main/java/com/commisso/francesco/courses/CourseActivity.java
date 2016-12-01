@@ -1,8 +1,12 @@
 package com.commisso.francesco.courses;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,17 +33,24 @@ import java.util.Collections;
 
 public class CourseActivity extends AppCompatActivity {
 
-    Course course;
-    SeekBar sb;
-    TextView title;
-    TextView courseCode;
-    TextView time;
-    TextView remainingDays;
-    FloatingActionButton fab;
-    RecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
-    DBHelper dbHelper;
-    int daysLeft;
+    private static final String tag = "CourseActivity";
+
+    private Course course;
+    private SeekBar sb;
+    private TextView title;
+    private TextView courseCode;
+    private TextView time;
+    private TextView remainingDays;
+    private FloatingActionButton fab;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private DBHelper dbHelper;
+    private int daysLeft;
+    private TaskAdapter ta;
+
+    private NotificationManager notifManager;
+    private boolean notifActive = false;
+    private int notifId = 33;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +79,9 @@ public class CourseActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.tasksRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new TaskAdapter(dbHelper.getTasks(course),course.getId()));
+
+        ta = new TaskAdapter(dbHelper.getTasks(course),course.getId());
+        recyclerView.setAdapter(ta);
 
 
         title.setText(course.getTitle());
@@ -88,7 +101,6 @@ public class CourseActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(),String.valueOf(course.getId()),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),AddTaskActivity.class);
                 intent.putExtra("id",course.getId());
                 startActivity(intent);
@@ -100,6 +112,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void setRemainingDays(){
+        Log.d(tag,"setRemainingDays()");
         daysLeft = DateTimeUtils.daysRemaining(course.getEndDate());
         remainingDays.setText(String.valueOf(daysLeft));
     }
@@ -109,9 +122,10 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void initializeSeekBar(){
+        Log.d(tag,"initializeSeekBar()");
         final int maxDays = DateTimeUtils.daysBetween(course.getStartDate(),course.getEndDate());
         int daysElapsed = DateTimeUtils.daysBetween(course.getStartDate(),new DateTime());
-
+        Log.d(tag,"daysElapsed = " + daysElapsed);
         sb.setMax(maxDays);
         sb.getThumb().mutate().setAlpha(0);
         sb.setProgress(daysElapsed);
@@ -144,10 +158,43 @@ public class CourseActivity extends AppCompatActivity {
             case R.id.action_delete_course:
                 deleteCourse();
                 return true;
+            case R.id.notification_toggle:
+                toggleCourseNotifications();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void toggleCourseNotifications() {
+        if(!notifActive){
+            NotificationCompat.Builder notifBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setContentTitle(course.getTitle())
+                            .setContentText(getNotificationText())
+                            .setTicker("Alert New Message")
+                            .setSmallIcon(R.drawable.cast_ic_notification_small_icon); // change me to app icon
+            notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notifManager.notify(notifId,notifBuilder.build());
+            Toast.makeText(this,"Notifications Enabled for Course",Toast.LENGTH_SHORT).show();
+            notifActive = true;
+        }
+        else{
+            notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notifManager.cancel(notifId);
+            Toast.makeText(this,"Notifications Disabled for Course",Toast.LENGTH_SHORT).show();
+            notifActive = false;
+        }
+
+    }
+
+    public String getNotificationText(){
+        if(ta.getItemCount()>0){
+            Task t = ta.getTask(0);
+            return t.getTitle() + " in " +String.valueOf(t.getDays()) + " Days";
+        }
+        else return String.valueOf(daysLeft) + " days left in course.";
     }
 
 
