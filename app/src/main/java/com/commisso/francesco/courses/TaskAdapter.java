@@ -31,7 +31,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHo
     @Override
     public TaskCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_card,parent,false);
-        return new TaskCardViewHolder(itemView);    }
+        return new TaskCardViewHolder(itemView);
+    }
 
     @Override
     public int getItemCount() {return tasks.size();}
@@ -83,4 +84,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskCardViewHo
             }
         });
     }
+
+    public Task getTask(int position) {
+        return tasks.get(position);
+    }
+
 }
