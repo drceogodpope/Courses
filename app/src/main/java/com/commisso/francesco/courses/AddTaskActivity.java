@@ -28,31 +28,31 @@ import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
 
-    Course course;
-    DBHelper dbHelper;
+    private Course course;
+    private DBHelper dbHelper;
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
 
-    LinearLayout topLayout;
-    ScrollView scrollView;
-    LinearLayout inputArgumentLayout;
-    RelativeLayout scrollViewRelativeLayout;
+    private LinearLayout topLayout;
+    private ScrollView scrollView;
+    private LinearLayout inputArgumentLayout;
+    private RelativeLayout scrollViewRelativeLayout;
 
-    TextView testButton;
-    TextView midtermButton;
-    TextView finalButton;
-    TextView projectButton;
-    TextView assignmentButton;
-    TextView presentationButton;
+    private TextView testButton;
+    private TextView midtermButton;
+    private TextView finalButton;
+    private TextView projectButton;
+    private TextView assignmentButton;
+    private TextView presentationButton;
 
-    ArrayList<TextView> buttons;
+    private ArrayList<TextView> buttons;
 
-    EditText taskPercent;
-    EditText testLength;
-    DatePicker taskDate;
-    TimePicker taskTime;
+    private EditText taskPercent;
+    private EditText testLength;
+    private DatePicker taskDate;
+    private TimePicker taskTime;
 
     int testType = -1;
     int projectType =-1;

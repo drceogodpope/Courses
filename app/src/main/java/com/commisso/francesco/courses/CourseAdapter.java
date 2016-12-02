@@ -47,7 +47,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
                 }
             });
         }
-
     }
 
     @Override
@@ -57,11 +56,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseCard
         holder.courseCode.setText(c.getCourseCode());
         holder.courseTime.setText(c.getDay()+" " +c.getTime());
         holder.courseId = c.getId();
-        
         holder.daysLeft.setText(String.valueOf(DateTimeUtils.daysRemaining(c.getEndDate())));
         holder.daysLeft.setTextColor(Course.decideTextColour(c));
     }
-
 
     @Override
     public CourseCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

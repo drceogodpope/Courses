@@ -12,7 +12,7 @@
     <color name="colorGreen">#4CAF50</color>
     <color name="colorRed">#D32F2F</color>
 
-
+<!--Soft Lavendar Colors-->
     <color name="colorDarkLavender">#603A56</color>
     <color name="colorLavender">#754668</color>
     <color name="colorDeepCharmine">#A5243D</color>
@@ -20,16 +20,6 @@
     <color name="colorLightSteelBlue">#A7C6DA</color>
     <color name="colorCambridgeBlue">#9DC0BC</color>
     <color name="colorFernGreen">#607744</color>
-
-
-
-
-
-
-
-
-
-
 
     <color name="colorDarkPurple">#512DA8</color>
     <color name="colorPurple">#673AB7</color>

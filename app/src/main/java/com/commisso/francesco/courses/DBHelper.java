@@ -60,19 +60,27 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME , null, 1);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
-                "create table " + COURSES_TABLE_NAME + "(" + COURSES_COLUMN_ID +" INTEGER PRIMARY KEY, " + COURSES_COLUMN_NAME + " TEXT, "+ COURSES_COLUMN_COURSE_CODE +" TEXT, "+ COURSES_COLUMN_START_DATE +" INTEGER, " + COURSES_COLUMN_END_DATE + " INTEGER, "+ COURSES_COLUMN_TIME+" TEXT)"
+                "create table " + COURSES_TABLE_NAME + "(" + COURSES_COLUMN_ID +" INTEGER PRIMARY KEY, "
+                        + COURSES_COLUMN_NAME + " TEXT, "+ COURSES_COLUMN_COURSE_CODE +" TEXT, "
+                        + COURSES_COLUMN_START_DATE +" INTEGER, " + COURSES_COLUMN_END_DATE + " INTEGER, "
+                        + COURSES_COLUMN_TIME+" TEXT)"
         );
 
         db.execSQL(
-                "create table " + TESTS_TABLE_NAME + "(" + TESTS_COLUMN_ID + " INTEGER PRIMARY KEY, " + TESTS_COLUMN_COURSE_ID +" INTEGER, " + TESTS_COLUMN_PERCENTAGE + " INTEGER, " + TESTS_COLUMN_DATE +" INTEGER, " + TESTS_COLUMN_TITLE + " INTEGER, " + TESTS_COLUMN_LENGTH + " INTEGER, " + TESTS_COLUMN_TOPIC + " TEXT, " + TESTS_COLUMN_TESTTYPE + " INT)"
+                "create table " + TESTS_TABLE_NAME + "(" + TESTS_COLUMN_ID + " INTEGER PRIMARY KEY, "
+                        + TESTS_COLUMN_COURSE_ID +" INTEGER, " + TESTS_COLUMN_PERCENTAGE + " INTEGER, "
+                        + TESTS_COLUMN_DATE +" INTEGER, " + TESTS_COLUMN_TITLE + " INTEGER, " + TESTS_COLUMN_LENGTH
+                        + " INTEGER, " + TESTS_COLUMN_TOPIC + " TEXT, " + TESTS_COLUMN_TESTTYPE + " INT)"
         );
 
         db.execSQL(
-                "create table " + PROJECT_TABLE_NAME + "(" + PROJECT_COLUMN_ID + " INTEGER PRIMARY KEY, " +  PROJECT_COLUMN_COURSE_ID +" INTEGER, " + PROJECT_COLUMN_PERCENTAGE + " INTEGER, " + PROJECT_COLUMN_DATE +" INTEGER, " + PROJECT_COLUMN_TITLE + " INTEGER, " + PROJECT_COLUMN_LENGTH + " INTEGER, " + PROJECT_COLUMN_GROUPMEMBERS + " TEXT)"
+                "create table " + PROJECT_TABLE_NAME + "(" + PROJECT_COLUMN_ID + " INTEGER PRIMARY KEY, "
+                        +  PROJECT_COLUMN_COURSE_ID +" INTEGER, " + PROJECT_COLUMN_PERCENTAGE + " INTEGER, "
+                        + PROJECT_COLUMN_DATE +" INTEGER, " + PROJECT_COLUMN_TITLE + " INTEGER, " + PROJECT_COLUMN_LENGTH
+                        + " INTEGER, " + PROJECT_COLUMN_GROUPMEMBERS + " TEXT)"
         );
     }
 
@@ -142,14 +150,12 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //GETS
-
     public Course getCourse(long key){
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + COURSES_TABLE_NAME + " WHERE " + COURSES_COLUMN_ID + " = " + key,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
-        // WHERE 1"
+        Cursor c = db.rawQuery("SELECT * FROM " + COURSES_TABLE_NAME + " WHERE " + COURSES_COLUMN_ID
+                + " = " + key,null);
 
         if (c.moveToFirst()){
             String title = c.getString(c.getColumnIndex(COURSES_COLUMN_NAME));
@@ -197,8 +203,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME + " WHERE " + TESTS_COLUMN_COURSE_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
-        // WHERE 1"
+        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME + " WHERE " + TESTS_COLUMN_COURSE_ID
+                + " = " + course.getId(),null);
 
         ArrayList<Task> tests = new ArrayList<>();
 
@@ -221,8 +227,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Task> getProjects(Course course){
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE " + PROJECT_COLUMN_COURSE_ID + " = " + course.getId(),null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
-        // WHERE 1"
+        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME + " WHERE "
+                + PROJECT_COLUMN_COURSE_ID + " = " + course.getId(),null);
 
         ArrayList<Task> tests = new ArrayList<>();
 
@@ -303,8 +309,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Course> getCourses(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Course> courses = new ArrayList<>();
-        Cursor c = db.query(COURSES_TABLE_NAME,null," 1",null,null,null,null);  // "SELECT * FROM " + COURSES_TABLE_NAME + "
-                                                                                // WHERE 1"
+        Cursor c = db.query(COURSES_TABLE_NAME,null," 1",null,null,null,null);
+
         if (c.moveToFirst()) {
             do {
                 String title = c.getString(c.getColumnIndex(COURSES_COLUMN_NAME));

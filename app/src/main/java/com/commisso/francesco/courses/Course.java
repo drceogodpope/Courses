@@ -22,8 +22,6 @@ public class Course implements Comparator<Course> {
     private DateTime startDate;
     private DateTime endDate;
     private LocalTime time;
-    private String teacher;
-    private String textbook;
     private ArrayList<Task> tasks = new ArrayList<>();
 
     //FIRST CONSTRUCTOR
@@ -46,39 +44,16 @@ public class Course implements Comparator<Course> {
         this.id = id;
     }
 
-    //
-    public Course(String teacher, String title, String courseCode,DateTime startDate, DateTime endDate,LocalTime time){
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.time = time;
-        this.teacher = teacher;
-        this.title = title;
-        this.courseCode = courseCode;
-    }
-
-
-    //  SORTS ARRAYLIST OF COURSES IN ORDER OF SOONEST TASK
-
-//    public static ArrayList<Course> sortCourses(ArrayList<Course> courses){
-//
-//    }
-
-
-
-    //GETTERS
     public long getId(){return this.id;}
-    public String getTeacher(){
-        return teacher;
-    }
+
     public String getTitle(){
         return title;
     }
+
     public String getCourseCode(){
         return courseCode;
     }
-    public String getTextbook(){
-        return this.textbook;
-    }
+
     public String getTimeHHMMSS(){
         DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss");
         return time.toString(fmt) ;
@@ -94,19 +69,17 @@ public class Course implements Comparator<Course> {
     public long getEndDateMillis() {
         return endDate.getMillis();
     }
+
     public DateTime getEndDate(){
         return endDate;
     }
+
     public long getStartDateMillis() {
         return startDate.getMillis();
     }
+
     public DateTime getStartDate(){return startDate;}
 
-
-    public static LocalTime makeLocalTime(String time){
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss");
-        return fmt.parseLocalTime(time);
-    }
 
     public Task getTask(int position){
         return tasks.get(position);
@@ -118,24 +91,15 @@ public class Course implements Comparator<Course> {
 
 
 
-    //SETTERS
-    public void setTextbook(String textbook){this.textbook = textbook;}
-    public void setTeacher(String teacher){
-            this.teacher  = teacher;
-    }
     public void setId(long id){
         this.id = id;
     }
-    public void setTasks(ArrayList<Task> tasks){this.tasks = tasks;}
-
-
     public void addTask(Task t){
         this.tasks.add(t);
     }
 
 
     //STATIC
-
     public static int decideTextColour(Course c){
 
         int redThreshold = 7;
@@ -144,7 +108,6 @@ public class Course implements Comparator<Course> {
             return ContextCompat.getColor(Courses.getAppContext(),R.color.colorLavender);
         }
             return ContextCompat.getColor(Courses.getAppContext(),R.color.colorLightSteelBlue);
-
     }
 
 
@@ -152,7 +115,6 @@ public class Course implements Comparator<Course> {
     public String toString() {
         return (
                 "\n"+
-                "Teacher: " + teacher +"\n" +
                 "Title: " + title +"\n" +
                 "Course Code: " + courseCode +"\n" +
                 "Start Date: " + startDate +"\n" +
@@ -164,11 +126,9 @@ public class Course implements Comparator<Course> {
 
     @Override
     public int compare(Course course, Course course1) {
-
-        if(course.getTasks().get(0).getDate() == null || course1.getTasks().get(0).getDate() == null){
-            return 0;
+        if(course.getTasks().get(0).getDate() != null && course1.getTasks().get(0).getDate() != null){
+            return course.getTasks().get(0).getDate().compareTo(course1.getTasks().get(0).getDate());
         }
-
-        return course.getTasks().get(0).getDate().compareTo(course1.getTasks().get(0).getDate());
+        return 0;
     }
 }
