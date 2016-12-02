@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String tag = "MainActivity";
 
     private FloatingActionButton fab;
     private RecyclerView coursesRecyclerView;
@@ -69,18 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-//        System.out.println("*** BEFORE \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
-//                             dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
-//                              dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
-//                            "*** \n");
-
-//        System.out.println("*** AFTER \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
-//                dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
-//                dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
-//                "*** \n");
-
-
+        Log.d(tag,  "*** BEFORE \n" + dbHelper.getTableAsString(DBHelper.COURSES_TABLE_NAME) +
+                    dbHelper.getTableAsString(DBHelper.TESTS_TABLE_NAME) +
+                    dbHelper.getTableAsString(DBHelper.PROJECT_TABLE_NAME) +
+                    "*** \n");
     }
 
     @Override
