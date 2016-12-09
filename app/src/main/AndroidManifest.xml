@@ -30,6 +30,8 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <activity android:name=".CalendarActivity"/>
+
     </application>
 
 </manifest>

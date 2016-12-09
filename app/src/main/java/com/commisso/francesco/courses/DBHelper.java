@@ -169,6 +169,62 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public ArrayList<Task> getAllTasks(){
+        ArrayList<Task> tasks = getAllProjects();
+        tasks.addAll(getAllTests());
+        return tasks;
+    }
+
+    private ArrayList<Task> getAllTests(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM " + TESTS_TABLE_NAME,null);
+
+        ArrayList<Task> tests = new ArrayList<>();
+
+        if (c.moveToFirst()) {
+            do {
+                DateTime date = new DateTime(c.getLong(c.getColumnIndex(TESTS_COLUMN_DATE)));
+                double percentage = c.getDouble(c.getColumnIndex(TESTS_COLUMN_PERCENTAGE));
+                String topic  = c.getString(c.getColumnIndex(TESTS_COLUMN_TOPIC));
+                int length = c.getInt(c.getColumnIndex(TESTS_COLUMN_LENGTH));
+                int testType = c.getInt(c.getColumnIndex(TESTS_COLUMN_TESTTYPE));
+                long id = c.getLong(c.getColumnIndex(TESTS_COLUMN_ID));
+                tests.add(new Test(percentage,date,testType,length,topic,id));
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return  tests;
+
+    }
+
+
+    private ArrayList<Task> getAllProjects(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM " + PROJECT_TABLE_NAME,null);
+
+        ArrayList<Task> projects = new ArrayList<>();
+
+
+        if (c.moveToFirst()) {
+            do {
+                DateTime date = new DateTime(c.getLong(c.getColumnIndex(PROJECT_COLUMN_DATE)));
+                double percentage = c.getDouble(c.getColumnIndex(PROJECT_COLUMN_PERCENTAGE));
+                int projectType  = c.getInt(c.getColumnIndex(PROJECT_COLUMN_TITLE));
+                long id = c.getLong(c.getColumnIndex(PROJECT_COLUMN_ID));
+                projects.add(new Project(percentage,date,projectType,id));
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return  projects;
+
+    }
+
 
 
     public ArrayList<Task> getTasks(Course course){
